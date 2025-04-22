@@ -33,7 +33,7 @@ source venv/bin/activate
 
 #### 4. Install flask
 ```
-pip install flask
+pip install Flask
 
 ```
 
