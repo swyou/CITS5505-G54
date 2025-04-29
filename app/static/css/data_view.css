@@ -1,0 +1,26 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.chart-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+canvas {
+    max-width: 100%; /* Allow charts to scale dynamically */
+    height: 300px; /* Set a practical height for better readability */
+    margin: 0 auto; /* Center the charts */
+}
+
+h1, h2 {
+    color: #343a40;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
