@@ -1,0 +1,257 @@
+/* ====== Reset ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+  }
+  
+  body {
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  ul, li {
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  /* ====== Variables ====== */
+  :root {
+    --color: #fd7c47;
+    --color2: #0066ff;
+  }
+  
+  /* ====== Main Layout ====== */
+  .main-container {
+    width: 85rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .main-content {
+    background-color: #e8e8e8;
+    overflow: hidden;
+  }
+  
+  /* clearfix */
+  .main-container:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  
+  /* ====== Header ====== */
+  .header {
+    height: 6rem;
+    line-height: 6rem;
+    border-bottom: 1px solid rgba(233, 233, 233);
+  }
+  
+  .header-container {
+    height: 6rem;
+  }
+  
+  .logo-image {
+    float: left;
+    width: 10rem;
+  }
+  
+  .right-header {
+    float: right;
+    margin-right: 5rem;
+    height: 6rem;
+  }
+  
+  .right-header .user_pirc {
+    display: flex;
+    align-items: center;
+  }
+  
+  .right-header .user_pirc img {
+    border-radius: 50%;
+    display: block;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    object-position: center;
+    margin-right: 12px;
+    border: 1px solid #eee;
+  }
+  
+  .right-header .user_pirc .name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  /* ====== Sidebar ====== */
+  .side-bar-l {
+    float: left;
+    position: sticky;
+    top: 0;
+  }
+  
+  .side-bar-l ul {
+    padding-top: 3rem;
+  }
+  
+  .side-bar-l ul li {
+    margin: 2rem 0;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1rem;
+  }
+  
+  .side-bar-l ul li i {
+    font-size: 1.7rem;
+  }
+  
+  .side-bar-l ul li span {
+    display: inline-block;
+    margin-left: 1rem;
+    font-weight: bold;
+  }
+  
+  .side-bar-l a {
+    color: black;
+    transition: color 0.3s;
+  }
+  
+  .side-bar-l .side-bar-active {
+    color: var(--color);
+  }
+  
+  .side-bar-l a:hover {
+    color: var(--color);
+  }
+  
+  /* ====== Main Content Center ====== */
+  .main-inner {
+    float: left;
+    width: 55rem;
+    background-color: #fff;
+    margin-left: 3rem;
+    border-left: 1px solid rgba(233, 233, 233);
+    border-right: 1px solid rgba(233, 233, 233);
+    overflow: visible;
+  }
+  
+  /* ====== Introduction Section ====== */
+  .intro-container {
+    background-color: transparent;
+    padding: 40px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: center;
+  }
+  
+  .intro-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+  
+  .app-name {
+    color: var(--color);
+  }
+  
+  .intro-description {
+    font-size: 1.2em;
+    color: #555555;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  
+  .intro-features {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1em;
+    color: #444444;
+  }
+  
+  .feature-item i {
+    font-size: 1.5em;
+    color: var(--color);
+  }
+  
+  /* ====== Footer ====== */
+  .footer {
+    background-color: #fff;
+    height: 150px;
+    border-top: 1px solid rgba(233, 233, 233);
+    padding-top: 100px;
+  }
+  
+  .footer .copy {
+    text-align: center;
+    font-size: 14px;
+    color: #a0a0a0;
+  }
+  
+  /* ====== Responsive (小屏适配) ====== */
+  @media all and (max-width: 1140px) {
+    .header {
+      padding: 0 20px;
+      background-color: #fff;
+    }
+  
+    .main-container {
+      width: auto;
+    }
+  
+    .side-bar-l ul {
+      display: flex;
+      padding-left: 20px;
+      padding-top: 0;
+    }
+  
+    .side-bar-l ul li {
+      margin-right: 20px;
+    }
+  
+    .main-content .main-container {
+      width: 100%;
+      position: relative;
+    }
+  
+    .main-content .main-container > div {
+      float: none !important;
+    }
+  
+    .main-content .main-container .main-inner {
+      margin: auto;
+      width: 95%;
+    }
+  
+    .main-right {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+    }
+  
+    .main-right .popular {
+      display: none;
+    }
+  }
+  
