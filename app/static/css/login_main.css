@@ -195,20 +195,6 @@
     color: var(--color);
   }
   
-  /* ====== Footer ====== */
-  .footer {
-    background-color: #fff;
-    height: 150px;
-    border-top: 1px solid rgba(233, 233, 233);
-    padding-top: 100px;
-  }
-  
-  .footer .copy {
-    text-align: center;
-    font-size: 14px;
-    color: #a0a0a0;
-  }
-  
   /* ====== Responsive (小屏适配) ====== */
   @media all and (max-width: 1140px) {
     .header {

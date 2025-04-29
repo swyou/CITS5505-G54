@@ -1,0 +1,11 @@
+.chart-container {
+    margin-bottom: 50px; /* Add consistent spacing between charts */
+}
+
+
+#macronutrientChart,
+#foodCategoryChart {
+    width: 70%;
+    display: block;
+    margin: 0 auto; /* Center the charts */
+}
