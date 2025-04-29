@@ -174,16 +174,24 @@
   }
   
   /* Footer */
+
   .footer {
-    background-color: #fff;
-    height: 150px;
-    border-top: 1px solid rgba(233, 233, 233);
-    padding-top: 100px;
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 20px 0;
   }
   
-  .footer .copy {
-    text-align: center;
-    font-size: 14px;
-    color: #a0a0a0;
+  .footer a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
   }
   
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
