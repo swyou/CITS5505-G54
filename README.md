@@ -2,7 +2,7 @@
 
 ## Introduction
 
-## How to contribute
+## Environment & Development 
 
 ### Prerequisites
 - **Python >= 3.9**
@@ -41,3 +41,21 @@ pip install Flask
 According to `Flask` file structure, static html files are expected in `app/static/` directory.
 
 
+### Git related
+
+#### 1. Create a Feature Branch  
+
+```bash
+git checkout -b feature/some-new-feature
+```
+
+#### 2. Commit Changes
+```bash
+git commit -m "Some descriptive commit message here"
+```
+
+#### 3. Push and Create Pull Request
+```bash
+git push origin feature/some-new-feature
+```
+   - Then open a Pull Request describing the changes and referencing any relevant issues.
