@@ -10,7 +10,7 @@
 ### Setup environment
 #### 1. Clone the Repository
 ```
-git clone git@github.com:LouieSu/CITS5505-G54.git
+git clone https://github.com/swyou/CITS5505-G54
 cd CITS5505-G54
 ```
 
