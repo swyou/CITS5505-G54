@@ -72,12 +72,12 @@
     height: 6rem;
   }
   
-  .right-header .user_pirc {
+  /* .right-header .user_pirc {
     display: flex;
     align-items: center;
   }
-  
-  .right-header .user_pirc img {
+   */
+  /* .right-header .user_pirc img {
     border-radius: 50%;
     display: block;
     width: 45px;
@@ -86,13 +86,13 @@
     object-position: center;
     margin-right: 12px;
     border: 1px solid #eee;
-  }
+  } */
   
-  .right-header .user_pirc .name {
+  /* .right-header .user_pirc .name {
     font-size: 20px;
     font-weight: bold;
     margin-left: 10px;
-  }
+  } */
   
   /* ====== Sidebar ====== */
   .side-bar-l {
