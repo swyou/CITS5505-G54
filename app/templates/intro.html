@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SmartBite</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login_main.css') }}">
+</head>
+
+<body>
+  <div id="flash-message-container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% for category, message in messages %}
+        <div class="custom-flash alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endwith %}
+  </div>
+
+
+  <div class="header">
+    <div class="main-container header-container">
+      <div class="logo-image">
+        <a href="{{ url_for('auth.intro') }}" title="SmartBite">
+          <img width="200" height="50" src="{{ url_for('static', filename='images/logo.svg') }}" alt="SmartBite Logo" />
+        </a>
+      </div>
+
+      <div class="right-header">
+        <div class="user_pirc d-flex align-items-center">
+          <img src="{{ url_for('static', filename='images/13_Food_Servant-512.webp') }}" alt="User Profile" />
+          <div class="name ms-2">{{ username }}</div>
+          <button class="btn btn-outline-danger btn-sm ms-3" onclick="confirmLogout()">Logout</button>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="main-container">
+      <!-- Sidebar -->
+      <div class="side-bar-l">
+        <ul>
+          <li>
+            <a href="{{ url_for('auth.intro') }}" class="side-bar-active">
+              <i class="bi-house-door"></i>
+              <span>Introduction</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.upload') }}" class="show_login">
+              <i class="bi-cloud-upload"></i>
+              <span>Upload Data</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.data') }}" class="show_login">
+              <i class="bi-bar-chart-line"></i>
+              <span>Visualise Data</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.share') }}" class="show_login">
+              <i class="bi-share"></i>
+              <span>Share Data</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-inner">
+        <div class="recipe-section">
+          <div class="post-recipes">
+            <div class="intro-container">
+              <h1 class="intro-title">
+                Welcome to <span class="app-name">SmartBite</span>!
+              </h1>
+
+              <p class="intro-description">
+                SmartBite is your personal food analytics companion, designed to help you monitor your dietary habits with precision. By uploading your daily meals, you can track calorie intake, macronutrient balance (carbohydrates, proteins, fats), and nutritional quality over time. Our intelligent system provides instant feedback and tailored insights to support your health and fitness goals, whether you're aiming to lose weight, build muscle, or simply eat more mindfully.
+              </p>
+
+              <p class="intro-description">
+                Upload your meal data effortlessly through our user-friendly interface. Visualize your eating patterns with dynamic charts and graphs that highlight trends and potential areas for improvement. Share your progress securely with friends, nutritionists, or workout partners, and stay motivated together! SmartBite empowers you to turn everyday eating into meaningful, measurable progress toward a healthier lifestyle.
+              </p>
+
+              <div class="intro-features">
+                <div class="feature-item">
+                  <i class="bi bi-cloud-upload"></i>
+                  <span>Upload Meals Easily</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-bar-chart-line"></i>
+                  <span>Analyze Nutrition Data</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-graph-up"></i>
+                  <span>Visualize Health Trends</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-share-fill"></i>
+                  <span>Share Insights Securely</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /main-inner -->
+    </div> <!-- /main-container -->
+  </div> <!-- /main-content -->
+
+  <div class="footer">
+    <div class="container text-center">
+      <p>© 2025 Group 54. All Rights Reserved</p>
+      <p>
+        <i class="bi-github"></i>
+        <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
+      </p>
+      <p><a href="#top">Back to Top</a></p>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/login_main.js') }}"></script>
+
+
+  <script>
+    function confirmLogout() {
+      if (confirm("Are you sure you want to log out?")) {
+        window.location.href = "{{ url_for('auth.logout') }}";
+      }
+    }
+  </script>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const flash = document.querySelector('.custom-flash');
+      if (flash) {
+        setTimeout(() => {
+          flash.classList.add('fade-out');
+          setTimeout(() => flash.remove(), 1000);
+        }, 3000); // 5 秒后淡出
+      }
+    });
+  </script>
+  
+
+
+</body>
+</html>
