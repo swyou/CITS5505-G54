@@ -1,143 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>SmartBite | Upload Recipe</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SmartBite - Upload Recipe</title>
+    <!-- CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    
+    <!-- global style -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- page specific style -->
+    <link rel="stylesheet" href="./css/upload.css" />
+  </head>
 
-  <!-- 引入公共样式 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="./css/style.css" />
-  <link rel="stylesheet" href="./css/upload.css" />
-</head>
-
-<body>
-  <!-- Header -->
-  <div class="header">
-    <div class="main-container header-container">
-      <div class="logo-image">
-        <a href="index.html">
-          <img src="./images/logo.svg" width="200" height="50" alt="SmartBite Logo">
-        </a>
-      </div>
-      <div class="right-header">
-        <div class="user_pirc">
-          <img src="./images/13_Food_Servant-512.webp" alt="User Profile" />
-          <div class="name">Liz</div>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="main-container header-container">
+        <div class="logo-image">
+          <a href="index.html" title="SmartBite">
+            <img width="200" height="50" src="./images/logo.svg" alt="SmartBite Logo" />
+          </a>
         </div>
-      </div>
-
-
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <div class="main-container">
-      <!-- Sidebar -->
-      <div class="side-bar-l">
-        <ul>
-          <li>
-            <a href="./intro.html">
-              <i class="bi-house-door"></i>
-              <span>Introduction</span>
-            </a>
-          </li>
-          <li>
-            <a href="./upload.html"  class="side-bar-active">
-              <i class="bi-cloud-upload"></i>
-              <span>Upload Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="./data.html">
-              <i class="bi-bar-chart-line"></i>
-              <span>Visualise Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="./share.html">
-              <i class="bi-share"></i>
-              <span>Share Data</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Upload Form -->
-      <div class="main-inner">
-        <div class="upload-form-container">
-          <div class="form-title"><i class="bi bi-pencil-square"></i> New Recipe Submission</div>
-          <form>
-            <!-- Dish Name -->
-            <div class="form-group">
-              <label>Dish Name</label>
-              <input type="text" class="form-control" placeholder="e.g. Grilled Chicken Salad" />
-            </div>
-
-            <!-- Meat Ingredients -->
-            <div class="form-group">
-              <label>Meat Ingredients</label>
-              <div id="meat-list">
-                <div class="ingredient-row">
-                  <input type="text" class="form-control" placeholder="e.g. Chicken Breast" />
-                  <input type="text" class="form-control" placeholder="Amount (g)" />
-                </div>
-              </div>
-              <button type="button" class="btn-outline" onclick="addIngredient('meat-list')">+ Add Meat</button>
-            </div>
-
-            <!-- Vegetable Ingredients -->
-            <div class="form-group">
-              <label>Vegetable Ingredients</label>
-              <div id="veg-list">
-                <div class="ingredient-row">
-                  <input type="text" class="form-control" placeholder="e.g. Broccoli" />
-                  <input type="text" class="form-control" placeholder="Amount (g)" />
-                </div>
-              </div>
-              <button type="button" class="btn-outline" onclick="addIngredient('veg-list')">+ Add Vegetable</button>
-            </div>
-
-            <!-- Preparation Steps -->
-            <div class="form-group">
-              <label>Preparation Steps</label>
-              <textarea class="form-control" rows="4" placeholder="Describe how to prepare..."></textarea>
-            </div>
-
-            <!-- Image Upload -->
-            <div class="form-group">
-              <label>Dish Image (optional)</label>
-              <input type="file" class="form-control-file" />
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn-orange mt-3">Submit Recipe</button>
-          </form>
+        <div class="right-header">
+          <div class="user_pirc">
+            <img src="./images/13_Food_Servant-512.webp" alt="User Profile" />
+            <div class="name">Liz</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <div class="container text-center">
-      <p>© 2025 SmartBite. All rights reserved.</p>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="main-container">
+        <!-- Sidebar -->
+        <div class="side-bar-l">
+          <ul>
+            <li>
+              <a href="./login.html">
+                <i class="bi-house-door"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+            <li>
+              <a href="./upload.html" class="side-bar-active">
+                <i class="bi-cloud-upload"></i>
+                <span>Upload Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="./data.html">
+                <i class="bi-bar-chart-line"></i>
+                <span>Visualise Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="./share.html">
+                <i class="bi-share"></i>
+                <span>Share Data</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Upload Form Section -->
+        <div class="main-inner">
+          <div class="recipe-section">
+            <div class="post-recipes">
+              <div class="intro-container">
+                <h1 class="intro-title">Upload Your Recipe</h1>
+                <p class="intro-description">Enter your dish details and ingredients below.</p>
+
+                <form method="POST" action="/upload">
+                  <div class="form-group mb-3">
+                    <label>Dish Name</label>
+                    <input type="text" name="title" class="form-control" required />
+                  </div>
+
+                  <!-- Ingredients -->
+                  <div id="ingredients-list">
+                    <div class="ingredient-row d-flex gap-2 mb-2">
+                      <select name="ingredient_type[]" class="form-select" style="width: 15%;">
+                        <option value="meat">Meat</option>
+                        <option value="vegetable">Vegetable</option>
+                      </select>
+                      <input type="text" name="ingredient_name[]" placeholder="Ingredient Name" class="form-control" required />
+                      <select name="ingredient_grams[]" class="form-select" style="width: 20%;" onchange="toggleCustomInput(this)">
+                        <option value="50">50g</option>
+                        <option value="100">100g</option>
+                        <option value="150">150g</option>
+                        <option value="custom">Other...</option>
+                      </select>
+                      <input type="number" name="ingredient_grams_custom[]" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn-outline mb-3" onclick="addIngredient()">+ Add Ingredient</button>
+
+                  <!-- Steps -->
+                  <div class="form-group mb-3">
+                    <label>Preparation Steps</label>
+                    <textarea name="steps" class="form-control" rows="4"></textarea>
+                  </div>
+
+                  <!-- Servings -->
+                  <div class="form-group mb-3">
+                    <label>Servings</label>
+                    <input type="number" name="servings" class="form-control" min="1" />
+                  </div>
+
+                  <button type="submit" class="btn-orange mt-2">Submit Recipe</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- JavaScript for Dynamic Add Ingredient -->
-  <script>
-    function addIngredient(sectionId) {
-      const container = document.getElementById(sectionId);
-      const row = document.createElement("div");
-      row.className = "ingredient-row";
-      row.innerHTML = `
-        <input type="text" class="form-control" placeholder="Ingredient" />
-        <input type="text" class="form-control" placeholder="Amount (g)" />
-      `;
-      container.appendChild(row);
-    }
-  </script>
-</body>
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container text-center">
+        <p>© 2025 Group 54. All Rights Reserved</p>
+        <p>
+          <i class="bi-github"></i>
+          <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
+        </p>
+        <p><a href="#top">Back to Top</a></p>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+      function addIngredient() {
+        const container = document.getElementById("ingredients-list");
+        const row = document.createElement("div");
+        row.className = "ingredient-row d-flex gap-2 mb-2";
+        row.innerHTML = `
+          <select name="ingredient_type[]" class="form-select" style="width: 15%;">
+            <option value="meat">Meat</option>
+            <option value="vegetable">Vegetable</option>
+          </select>
+          <input type="text" name="ingredient_name[]" placeholder="Ingredient Name" class="form-control" required />
+          <select name="ingredient_grams[]" class="form-select" style="width: 20%;" onchange="toggleCustomInput(this)">
+            <option value="50">50g</option>
+            <option value="100">100g</option>
+            <option value="150">150g</option>
+            <option value="custom">Other...</option>
+          </select>
+          <input type="number" name="ingredient_grams_custom[]" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
+        `;
+        container.appendChild(row);
+      }
+
+      function toggleCustomInput(selectEl) {
+        const customInput = selectEl.nextElementSibling;
+        if (selectEl.value === "custom") {
+          customInput.style.display = "block";
+        } else {
+          customInput.style.display = "none";
+        }
+      }
+    </script>
+  </body>
 </html>
