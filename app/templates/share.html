@@ -1,105 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>SmartBite - Share Data</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SmartBite - Visualise Data</title>
+    <!-- CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    
+    <!-- global style -->
+    <link rel="stylesheet" href="./css/style.css" />
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- page specific style -->
+    <link rel="stylesheet" href="./css/share.css" />
+  </head>
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/share.css') }}">
-</head>
-
-<body>
-  <div class="header">
-    <div class="main-container header-container">
-      <div class="logo-image">
-        <a href="{{ url_for('auth.intro') }}" title="SmartBite">
-          <img width="200" height="50" src="{{ url_for('static', filename='images/logo.svg') }}" alt="SmartBite Logo" />
-        </a>
-      </div>
-
-      <div class="right-header">
-        <div class="user_pirc d-flex align-items-center">
-          <img src="{{ url_for('static', filename='images/13_Food_Servant-512.webp') }}" alt="User Profile" />
-          <div class="name ms-2">{{ username }}</div>
-          <button class="btn btn-outline-danger btn-sm ms-3" onclick="confirmLogout()">Logout</button>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="main-container header-container">
+        <div class="logo-image">
+          <a href="index.html" title="SmartBite">
+            <img width="200" height="50" src="./images/logo.svg" alt="SmartBite Logo" />
+          </a>
         </div>
+
+        <div class="right-header">
+          <div class="user_pirc">
+            <img src="./images/13_Food_Servant-512.webp" alt="User Profile" />
+            <div class="name">Liz</div>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
 
-  <div class="main-content">
-    <div class="main-container">
-      <!-- Sidebar -->
-      <div class="side-bar-l">
-        <ul>
-          <li>
-            <a href="{{ url_for('auth.intro') }}">
-              <i class="bi-house-door"></i>
-              <span>Introduction</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.upload') }}">
-              <i class="bi-cloud-upload"></i>
-              <span>Upload Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.data') }}">
-              <i class="bi-bar-chart-line"></i>
-              <span>Visualise Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.share') }}" class="side-bar-active">
-              <i class="bi-share"></i>
-              <span>Share Data</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="main-container">
+        <!-- Sidebar -->
+        <div class="side-bar-l">
+          <ul>
+            <li>
+              <a href="./intro.html">
+                <i class="bi-house-door"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+            <li>
+              <a href="./upload.html">
+                <i class="bi-cloud-upload"></i>
+                <span>Upload Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="./data.html">
+                <i class="bi-bar-chart-line"></i>
+                <span>Visualise Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="./share.html" class="side-bar-active">
+                <i class="bi-share"></i>
+                <span>Share Data</span>
+              </a>
+            </li>
+          </ul>
+        </div>
 
-      <!-- Main Content -->
-      <div class="main-inner">
-        <div class="intro-container">
-          <h2 class="intro-title">Share Your Data</h2>
-          <p class="intro-description">Please enter the user ID you want to share your data with.</p>
-          <form id="share-data-form">
-            <div class="mb-3">
-              <input type="number" id="user-id" class="form-control" placeholder="Enter User ID" required>
+
+    </div>
+    <div class="main-inner">
+        <div class="share-data-section">
+            <h1 class="text-center">Share Your Data</h1>
+            <p class="text-center">Select a user to share your data with:</p>
+            
+            <!-- Dropdown for selecting users -->
+            <div class="mb-4">
+              <label for="userDropdown" class="form-label">Select User:</label>
+              <select id="userDropdown" class="form-select">
+                <option value="" selected disabled>Select a user</option>
+                <!-- Options will be dynamically populated -->
+              </select>
             </div>
-            <button type="submit" class="btn btn-primary">Share</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <div class="container text-center">
-      <p>© 2025 Group 54. All Rights Reserved</p>
-      <p>
-        <i class="bi-github"></i>
-        <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
-      </p>
-      <p><a href="#top">Back to Top</a></p>
-    </div>
-  </div>
+            <button id="shareButton" class="btn btn-primary">Share Data</button>
+          </div>
 
-  <!-- JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    function confirmLogout() {
-      if (confirm("Are you sure you want to log out?")) {
-        window.location.href = "{{ url_for('auth.logout') }}";
-      }
+          <script>
+  // Populate the dropdown with dummy users
+  const dummyUsers = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' }
+  ];
+
+  const dropdown = document.getElementById('userDropdown');
+  dummyUsers.forEach(user => {
+    const option = document.createElement('option');
+    option.value = user.id;
+    option.textContent = user.name;
+    dropdown.appendChild(option);
+  });
+
+  document.getElementById('shareButton').addEventListener('click', function () {
+    const selectedUserId = document.getElementById('userDropdown').value;
+    if (selectedUserId) {
+      alert(`Data shared successfully with user ID: ${selectedUserId}`);
+    } else {
+      alert('Please select a user to share data with.');
     }
-  </script>
-</body>
+  });
+</script>
+        </div>
+    </div>
+</div>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer">
+            <div class="container text-center">
+                <p>© 2025 Group 54. All Rights Reserved</p>
+                <p>
+                    <i class="bi-github"></i>
+                    <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
+                </p>
+                <p><a href="#top">Back to Top</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/data_view.js"></script>
+  </body>
 </html>

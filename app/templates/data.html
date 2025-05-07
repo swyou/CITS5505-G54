@@ -1,139 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>SmartBite - Visualise Data</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SmartBite - Visualise Data</title>
+    <!-- CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    
+    <!-- global style -->
+    <link rel="stylesheet" href="./css/style.css" />
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- page specific style -->
+    <link rel="stylesheet" href="./css/data_view.css" />
+  </head>
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/data_view.css') }}">
-</head>
-
-<body>
-  <div class="header">
-    <div class="main-container header-container">
-      <div class="logo-image">
-        <a href="{{ url_for('auth.intro') }}" title="SmartBite">
-          <img width="200" height="50" src="{{ url_for('static', filename='images/logo.svg') }}" alt="SmartBite Logo" />
-        </a>
-      </div>
-
-      <div class="right-header">
-        <div class="user_pirc d-flex align-items-center">
-          <img src="{{ url_for('static', filename='images/13_Food_Servant-512.webp') }}" alt="User Profile" />
-          <div class="name ms-2">{{ username }}</div>
-          <button class="btn btn-outline-danger btn-sm ms-3" onclick="confirmLogout()">Logout</button>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="main-container header-container">
+        <div class="logo-image">
+          <a href="index.html" title="SmartBite">
+            <img width="200" height="50" src="./images/logo.svg" alt="SmartBite Logo" />
+          </a>
+        </div>
+        <div class="right-header">
+          <div class="user_pirc">
+            <img src="./images/13_Food_Servant-512.webp" alt="User Profile" />
+            <div class="name">Liz</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="main-content">
-    <div class="main-container">
-      <!-- Sidebar -->
-      <div class="side-bar-l">
-        <ul>
-          <li>
-            <a href="{{ url_for('auth.intro') }}">
-              <i class="bi-house-door"></i>
-              <span>Introduction</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.upload') }}">
-              <i class="bi-cloud-upload"></i>
-              <span>Upload Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.data') }}" class="side-bar-active">
-              <i class="bi-bar-chart-line"></i>
-              <span>Visualise Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.share') }}">
-              <i class="bi-share"></i>
-              <span>Share Data</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="main-container">
+        <!-- Sidebar -->
+        <div class="side-bar-l">
+          <ul>
+            <li>
+              <a href="./intro.html">
+                <i class="bi-house-door"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+            <li>
+              <a href="./upload.html">
+                <i class="bi-cloud-upload"></i>
+                <span>Upload Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="./data.html" class="side-bar-active">
+                <i class="bi-bar-chart-line"></i>
+                <span>Visualise Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="./share.html">
+                <i class="bi-share"></i>
+                <span>Share Data</span>
+              </a>
+            </li>
+          </ul>
+        </div>
 
-      <!-- Main Content -->
-      <div class="main-inner">
-        <div class="recipe-section">
-          <div class="post-recipes">
-            <div class="intro-container">
-              <h1 class="intro-title">Nutrition Trends Overview</h1>
-              <p class="intro-description">
-                Explore your dietary trends with dynamic charts and insights.
-              </p>
+        <!-- Charts Section -->
+        <div class="main-inner">
+          <div class="recipe-section">
+            <div class="post-recipes">
+              <div class="intro-container">
+                <h1 class="intro-title">Nutrition Trends Overview</h1>
+                <p class="intro-description">
+                  Explore your dietary trends with dynamic charts and insights.
+                </p>
 
-              <div class="row">
-                <!-- Calories Line Chart -->
-                <div class="col-12 chart-container">
-                  <h2 class="text-center">Calories Line Chart</h2>
-                  <canvas id="caloriesChart" class="mt-4"></canvas>
+                <!-- Shared Reports Dropdown -->
+                <div class="shared-reports-dropdown mb-4">
+                  <label for="sharedReports" class="form-label">View Shared Reports:</label>
+                  <select id="sharedReports" class="form-select">
+                    <option value="" selected disabled>Select a user</option>
+                    <!-- Options will be dynamically populated -->
+                  </select>
                 </div>
 
-                <!-- Macronutrient Proportions Pie Chart -->
-                <div class="col-12 chart-container">
-                  <h2 class="text-center">Macronutrient Proportions</h2>
-                  <canvas id="macronutrientChart" class="mt-4"></canvas>
-                </div>
+                <!-- Charts -->
+                <div class="row">
+                  <!-- Calories Line Chart -->
+                  <div class="col-12">
+                    <div class="chart-container">
+                      <h2 class="text-center">Calories Line Chart</h2>
+                      <canvas id="caloriesChart" class="mt-4"></canvas>
+                    </div>
+                  </div>
 
-                <!-- Food Category Proportions Doughnut Chart -->
-                <div class="col-12 chart-container">
-                  <h2 class="text-center">Food Category Proportions</h2>
-                  <canvas id="foodCategoryChart" class="mt-4"></canvas>
-                </div>
+                  <!-- Macronutrient Proportions Pie Chart -->
+                  <div class="col-12">
+                    <div class="chart-container">
+                      <h2 class="text-center">Macronutrient Proportions</h2>
+                      <canvas id="macronutrientChart" class="mt-4"></canvas>
+                    </div>
+                  </div>
 
-                <!-- Weekly Protein Intake Bar Chart -->
-                <div class="col-12 chart-container">
-                  <h2 class="text-center">Weekly Protein Intake</h2>
-                  <canvas id="proteinChart" class="mt-4"></canvas>
-                </div>
+                  <!-- Food Category Proportions Doughnut Chart -->
+                  <div class="col-12">
+                    <div class="chart-container">
+                      <h2 class="text-center">Food Category Proportions</h2>
+                      <canvas id="foodCategoryChart" class="mt-4"></canvas>
+                    </div>
+                  </div>
 
-                <!-- Daily Water Intake Chart -->
-                <div class="col-12 chart-container">
-                  <h2 class="text-center">Daily Water Intake</h2>
-                  <canvas id="waterIntakeChart" class="mt-4"></canvas>
+                  <!-- Weekly Protein Intake Bar Chart -->
+                  <div class="col-12">
+                    <div class="chart-container">
+                      <h2 class="text-center">Weekly Protein Intake</h2>
+                      <canvas id="proteinChart" class="mt-4"></canvas>
+                    </div>
+                  </div>
+
+                  <!-- Daily Water Intake Chart -->
+                  <div class="col-12">
+                    <div class="chart-container">
+                      <h2 class="text-center">Daily Water Intake</h2>
+                      <canvas id="waterIntakeChart" class="mt-4"></canvas>
+                    </div>
+                  </div>
                 </div>
+                <!-- End of Charts -->
               </div>
             </div>
           </div>
         </div>
-      </div> <!-- /main-inner -->
-    </div> <!-- /main-container -->
-  </div> <!-- /main-content -->
-
-  <div class="footer">
-    <div class="container text-center">
-      <p>© 2025 Group 54. All Rights Reserved</p>
-      <p>
-        <i class="bi-github"></i>
-        <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
-      </p>
-      <p><a href="#top">Back to Top</a></p>
+      </div>
     </div>
-  </div>
 
-  <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="{{ url_for('static', filename='js/data_view.js') }}"></script>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer">
+            <div class="container text-center">
+                <p>© 2025 Group 54. All Rights Reserved</p>
+                <p>
+                    <i class="bi-github"></i>
+                    <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
+                </p>
+                <p><a href="#top">Back to Top</a></p>
+            </div>
+        </div>
+    </div>
 
-  <script>
-    function confirmLogout() {
-      if (confirm("Are you sure you want to log out?")) {
-        window.location.href = "{{ url_for('auth.logout') }}";
-      }
-    }
-  </script>
-</body>
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/data_view.js"></script>
+  </body>
 </html>
