@@ -77,6 +77,7 @@ def share_with():
 
 
 @main.route('/upload', methods=['POST'])
+@login_required
 def handle_upload():
     title = request.form.get("title")
     servings = int(request.form.get("servings") or 1)
