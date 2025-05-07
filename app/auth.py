@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required
 import os, hashlib
 from . import db
 from .models import User
@@ -21,7 +21,7 @@ def login():
             if input_hash == user.password_hash:
                 login_user(user)
                 flash("Login successful!", "success")
-                return redirect(url_for('auth.intro'))
+                return redirect(url_for('main.intro'))
         flash("Invalid username or password.", category="login")
     return render_template('login.html', form=form, show_register=False)
 
@@ -53,28 +53,6 @@ def register():
 
 
     return render_template('login.html', form=form, show_register=True)
-
-@auth_bp.route('/intro')
-@login_required
-def intro():
-    return render_template('intro.html', username=current_user.username)
-
-
-@auth_bp.route('/data')
-@login_required
-def data():
-    return render_template('data.html', username=current_user.username)
-
-@auth_bp.route('/share')
-@login_required
-def share():
-    return render_template('share.html', username=current_user.username)
-
-@auth_bp.route('/upload')
-@login_required
-def upload():
-    return render_template('upload.html', username=current_user.username)
-
 
 
 @auth_bp.route('/logout')

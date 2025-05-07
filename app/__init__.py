@@ -21,18 +21,14 @@ def create_app():
     # 导入模型 & 蓝图
     from .models import User
     from .auth import auth_bp
+    from .routes import main
     app.register_blueprint(auth_bp)
+    app.register_blueprint(main)
 
     # 用户加载函数
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
-
-    # 根路由控制
-    @app.route('/')
-    def root():
-        if current_user.is_authenticated:
-            return redirect(url_for('auth.intro'))
-        return redirect(url_for('auth.login'))
+    
 
     return app

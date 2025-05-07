@@ -1,0 +1,17 @@
+<div class="header">
+    <div class="main-container header-container">
+      <div class="logo-image">
+        <a href="{{ url_for('main.intro') }}" title="SmartBite">
+          <img width="200" height="50" src="{{ url_for('static', filename='images/logo.svg') }}" alt="SmartBite Logo" />
+        </a>
+      </div>
+
+      <div class="right-header">
+        <div class="user_pirc d-flex align-items-center">
+          <img src="{{ url_for('static', filename='images/13_Food_Servant-512.webp') }}" alt="User Profile" />
+          <div class="name ms-2">{{ username }}</div>
+          <button class="btn btn-outline-danger btn-sm ms-3" onclick="confirmLogout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>

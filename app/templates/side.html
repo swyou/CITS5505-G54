@@ -1,0 +1,28 @@
+<div class="side-bar-l">
+    <ul>
+      <li>
+        <a href="{{ url_for('main.intro') }}" class="{% if request.endpoint == 'main.intro' %}side-bar-active{% endif %}">
+          <i class="bi-house-door"></i>
+          <span>Introduction</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('main.upload') }}" class="{% if request.endpoint == 'main.upload' %}side-bar-active{% endif %}">
+          <i class="bi-cloud-upload"></i>
+          <span>Upload Data</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('main.data') }}" class="{% if request.endpoint == 'main.data' %}side-bar-active{% endif %}">
+          <i class="bi-bar-chart-line"></i>
+          <span>Visualise Data</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('main.share') }}" class="{% if request.endpoint == 'main.share' %}side-bar-active{% endif %}">
+          <i class="bi-share"></i>
+          <span>Share Data</span>
+        </a>
+      </li>
+    </ul>
+</div>
