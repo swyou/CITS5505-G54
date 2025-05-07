@@ -68,7 +68,7 @@ def share_with():
     # Check if a sharing already exists
     existing_sharing = get_existing_sharing(sender_id=user_id, receiver_id=to_user_id)
     if existing_sharing:
-        return jsonify({"error": "You have already shared data with this user."}), 400
+        return jsonify({"error": "shared"}), 400
 
     # Create a new sharing
     sharing = create_sharing(sender_id=user_id, receiver_id=to_user_id, message="")
