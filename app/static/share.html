@@ -70,15 +70,46 @@
 
     </div>
     <div class="main-inner">
-        <div class="intro-container">
-            <h2 class="intro-title">Share Your Data</h2>
-            <p class="intro-description">Please enter the user ID you want to share your data with.</p>
-            <form id="share-data-form">
-                <div class="mb-3">
-                    <input type="number" id="user-id" class="form-control" placeholder="Enter User ID" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Share</button>
-            </form>
+        <div class="share-data-section">
+            <h1 class="text-center">Share Your Data</h1>
+            <p class="text-center">Select a user to share your data with:</p>
+            
+            <!-- Dropdown for selecting users -->
+            <div class="mb-4">
+              <label for="userDropdown" class="form-label">Select User:</label>
+              <select id="userDropdown" class="form-select">
+                <option value="" selected disabled>Select a user</option>
+                <!-- Options will be dynamically populated -->
+              </select>
+            </div>
+
+            <button id="shareButton" class="btn btn-primary">Share Data</button>
+          </div>
+
+          <script>
+  // Populate the dropdown with dummy users
+  const dummyUsers = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' }
+  ];
+
+  const dropdown = document.getElementById('userDropdown');
+  dummyUsers.forEach(user => {
+    const option = document.createElement('option');
+    option.value = user.id;
+    option.textContent = user.name;
+    dropdown.appendChild(option);
+  });
+
+  document.getElementById('shareButton').addEventListener('click', function () {
+    const selectedUserId = document.getElementById('userDropdown').value;
+    if (selectedUserId) {
+      alert(`Data shared successfully with user ID: ${selectedUserId}`);
+    } else {
+      alert('Please select a user to share data with.');
+    }
+  });
+</script>
         </div>
     </div>
 </div>
