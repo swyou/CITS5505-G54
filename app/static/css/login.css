@@ -25,6 +25,29 @@ body, html {
     100% { transform: translate(-1000px, -1000px); }
   }
   
+
+  .custom-flash {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .custom-flash.fade-out {
+    opacity: 0;
+  }
+  
+
+
   /* 登录卡片样式 */
   .login-container {
     height: 100vh;

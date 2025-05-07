@@ -1,12 +1,18 @@
-  document.getElementById("showRegister").addEventListener("click", function (e) {
+document.addEventListener('DOMContentLoaded', function () {
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  const showRegister = document.getElementById('showRegister');
+  const showLogin = document.getElementById('showLogin');
+
+  showRegister.addEventListener('click', function (e) {
     e.preventDefault();
-    document.getElementById("loginForm").classList.add("d-none");
-    document.getElementById("registerForm").classList.remove("d-none");
+    loginForm.classList.add('d-none');
+    registerForm.classList.remove('d-none');
   });
-  
-  document.getElementById("showLogin").addEventListener("click", function (e) {
+
+  showLogin.addEventListener('click', function (e) {
     e.preventDefault();
-    document.getElementById("registerForm").classList.add("d-none");
-    document.getElementById("loginForm").classList.remove("d-none");
+    registerForm.classList.add('d-none');
+    loginForm.classList.remove('d-none');
   });
-  
+});
