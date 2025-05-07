@@ -13,7 +13,7 @@
     <!-- page specific style -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/data_view.css') }}" />
 
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -37,57 +37,54 @@
                 </p>
 
                 <!-- Shared Reports Dropdown -->
-                <div class="shared-reports-dropdown mb-4">
-                  <label for="sharedReports" class="form-label">View Shared Reports:</label>
+                <div class="shared-reports-dropdown">
+                  <label for="sharedReports" class="form-label">View Reports:</label>
                   <select id="sharedReports" class="form-select">
-                    <option value="" selected disabled>Select a user</option>
-                    <!-- Options will be dynamically populated -->
+                    <option value="myself" selected>Myself</option>
+                    <!-- Shared reports will be dynamically populated -->
                   </select>
                 </div>
 
-                <!-- Charts -->
-                <div class="row">
-                  <!-- Calories Line Chart -->
-                  <div class="col-12">
-                    <div class="chart-container">
-                      <h2 class="text-center">Calories Line Chart</h2>
-                      <canvas id="caloriesChart" class="mt-4"></canvas>
+                <!-- Tabs Section -->
+                <div class="tabs-container">
+                  <ul class="nav nav-tabs" id="analyticsTabs" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="calories-tab" data-bs-toggle="tab" href="#calories" role="tab" aria-controls="calories" aria-selected="true">Daily Calories</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="veg-meat-tab" data-bs-toggle="tab" href="#veg-meat" role="tab" aria-controls="veg-meat" aria-selected="false">Veg-Meat Proportion</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="grams-tab" data-bs-toggle="tab" href="#grams" role="tab" aria-controls="grams" aria-selected="false">Daily Grams</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="protein-tab" data-bs-toggle="tab" href="#protein" role="tab" aria-controls="protein" aria-selected="false">Daily Protein</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="analyticsTabsContent">
+                    <div class="tab-pane fade show active" id="calories" role="tabpanel" aria-labelledby="calories-tab">
+                      <div class="chart-container">
+                        <canvas id="caloriesChart"></canvas>
+                      </div>
                     </div>
-                  </div>
-
-                  <!-- Macronutrient Proportions Pie Chart -->
-                  <div class="col-12">
-                    <div class="chart-container">
-                      <h2 class="text-center">Macronutrient Proportions</h2>
-                      <canvas id="macronutrientChart" class="mt-4"></canvas>
+                    <div class="tab-pane fade" id="veg-meat" role="tabpanel" aria-labelledby="veg-meat-tab">
+                      <div class="chart-container">
+                        <canvas id="vegMeatChart"></canvas>
+                      </div>
                     </div>
-                  </div>
-
-                  <!-- Food Category Proportions Doughnut Chart -->
-                  <div class="col-12">
-                    <div class="chart-container">
-                      <h2 class="text-center">Food Category Proportions</h2>
-                      <canvas id="foodCategoryChart" class="mt-4"></canvas>
+                    <div class="tab-pane fade" id="grams" role="tabpanel" aria-labelledby="grams-tab">
+                      <div class="chart-container">
+                        <canvas id="gramsChart"></canvas>
+                      </div>
                     </div>
-                  </div>
-
-                  <!-- Weekly Protein Intake Bar Chart -->
-                  <div class="col-12">
-                    <div class="chart-container">
-                      <h2 class="text-center">Weekly Protein Intake</h2>
-                      <canvas id="proteinChart" class="mt-4"></canvas>
-                    </div>
-                  </div>
-
-                  <!-- Daily Water Intake Chart -->
-                  <div class="col-12">
-                    <div class="chart-container">
-                      <h2 class="text-center">Daily Water Intake</h2>
-                      <canvas id="waterIntakeChart" class="mt-4"></canvas>
+                    <div class="tab-pane fade" id="protein" role="tabpanel" aria-labelledby="protein-tab">
+                      <div class="chart-container">
+                        <canvas id="proteinChart"></canvas>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <!-- End of Charts -->
+                <!-- End of Tabs Section -->
               </div>
             </div>
           </div>

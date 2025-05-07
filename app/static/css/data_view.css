@@ -1,11 +1,115 @@
+/* General Chart Container */
 .chart-container {
     margin-bottom: 50px; /* Add consistent spacing between charts */
 }
 
+/* Ensure all charts have the same size */
+.chart-container canvas {
+    width: 100% !important; /* Ensure the chart takes up the full width of its container */
+    height: 400px !important; /* Set a consistent height for all charts */
+    max-width: 700px; /* Optional: Limit the maximum width for better responsiveness */
+    margin: 0 auto; /* Center the charts */
+    display: block;
+}
+
+/* Center Charts */
+#caloriesChart,
+#gramsChart,
+#proteinChart {
+    width: 70%;
+    display: block;
+    margin: 0 auto; /* Center the charts */
+}
 
 #macronutrientChart,
 #foodCategoryChart {
     width: 70%;
     display: block;
     margin: 0 auto; /* Center the charts */
+}
+
+/* Specific styling for the Veg-Meat Proportion chart */
+#vegMeatChart {
+    width: 50% !important; /* Make the pie chart narrower */
+    height: auto !important; /* Maintain aspect ratio */
+    display: block;
+    margin: 0 auto; /* Center the chart */
+}
+
+/* Tabs Styling */
+.nav-tabs {
+    border-bottom: 2px solid rgba(233, 233, 233, 0.8); /* Match sidebar border style */
+    margin-bottom: 20px;
+}
+
+.nav-tabs .nav-item {
+    margin-right: 5px;
+}
+
+.nav-tabs .nav-link {
+    color: black; /* Match sidebar text color */
+    background-color: #fff; /* White background for tabs */
+    border: 1px solid rgba(233, 233, 233, 0.8); /* Match sidebar border style */
+    border-radius: 5px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+    color: #fd7c47; /* Match sidebar active color */
+    background-color: #fff; /* Keep background white for active tab */
+    border-color: #fd7c47; /* Highlight border with active color */
+    font-weight: bold;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #fd7c47; /* Match sidebar hover color */
+    background-color: rgba(253, 124, 71, 0.1); /* Light orange background on hover */
+    border-color: #fd7c47; /* Highlight border on hover */
+}
+
+/* Tab Content Styling */
+.tab-content {
+    background-color: #fff; /* Match sidebar background */
+    border: 1px solid rgba(233, 233, 233, 0.8); /* Match sidebar border style */
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: black; /* Match sidebar text color */
+}
+
+/* Tab Pane Styling */
+.tab-pane {
+    text-align: center;
+}
+
+/* Shared Reports Dropdown */
+.shared-reports-dropdown {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically center the label and dropdown */
+    justify-content: flex-start; /* Align items to the left */
+    margin-bottom: 20px;
+    gap: 10px; /* Add spacing between the label and dropdown */
+}
+
+.shared-reports-dropdown .form-label {
+    font-weight: bold;
+    color: black; /* Match sidebar text color */
+    margin: 0; /* Remove default margin */
+}
+
+.shared-reports-dropdown .form-select {
+    width: 50%; /* Adjust width as needed */
+    border-radius: 5px;
+    border: 1px solid rgba(233, 233, 233, 0.8); /* Match sidebar border style */
+    background-color: #fff; /* Match sidebar background */
+    color: black; /* Match sidebar text color */
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.shared-reports-dropdown .form-select:focus {
+    border-color: #fd7c47; /* Match sidebar active color */
+    box-shadow: 0 0 5px rgba(253, 124, 71, 0.5); /* Light orange glow on focus */
+    color: black; /* Keep text color consistent */
 }

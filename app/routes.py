@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, jsonify, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
+from .service import *
+import json
 
 main = Blueprint('main', __name__)
 
@@ -30,46 +32,133 @@ def share():
 @login_required
 def upload():
     return render_template('upload.html', username=current_user.username)
-# 每 100g 平均热量
-AVG_KCAL_TABLE = {
-    "meat": 200,
-    "vegetable": 35
-}
 
-def calculate_kcal_by_type(ingredient_type, grams):
-    kcal_per_100g = AVG_KCAL_TABLE.get(ingredient_type.lower(), 0)
-    return round((grams / 100.0) * kcal_per_100g, 2)
+@main.route('/sharings', methods=['GET'])
+@login_required
+def list_sharings():
+    user_id = current_user.get_id()
+    sharings = get_sharings_by_receiver(user_id)
+    return jsonify(sharings)
+
+
+@main.route('/users', methods=['GET'])
+@login_required
+def list_users():
+    user_id = current_user.get_id()
+    # remove credential information, only returns name and id.
+    users = [{"id": user.id, "username": user.username} for user in get_all_users_except_self(user_id)]
+    return jsonify(users)
+
+
+@main.route('/share', methods=['POST'])
+@login_required
+def share_with():
+    to_user_id = request.form.get("to_user_id")
+    message = request.form.get("message")
+
+    if not to_user_id or not message:
+        return jsonify({"error": "Missing required parameters"}), 400
+
+    user_id = current_user.get_id()
+    sharing = create_sharing(sender_id=user_id, receiver_id=to_user_id, message=message)
+
+    return jsonify({"success": True, "sharing": sharing}), 201
+
 
 @main.route('/upload', methods=['POST'])
 def handle_upload():
     title = request.form.get("title")
     servings = int(request.form.get("servings") or 1)
+    date_str = request.form.get("date")
+    try:
+        # Validate if the date is in a proper timestamp format
+        date = datetime.strptime(date_str, "%Y-%m-%d")
+    except (ValueError, TypeError):
+        return jsonify({"error": "Invalid date format. Expected YYYY-MM-DD."}), 400
+    user_id = current_user.get_id()
 
-    # 获取多个食材（数组）
+    # Get multiple ingredients (arrays)
     types = request.form.getlist("ingredient_type[]")
     grams_choices = request.form.getlist("ingredient_grams[]")
     grams_customs = request.form.getlist("ingredient_grams_custom[]")
 
-    ingredients = []
-    total_kcal = 0
+    # Delegate processing and saving to db
+    save_recipe(user_id, title, date, servings, types, grams_choices, grams_customs)
 
-    for t, g_choice, g_custom in zip(types, grams_choices, grams_customs):
-        grams = float(g_custom) if g_choice == "custom" and g_custom else float(g_choice)
-        kcal = calculate_kcal_by_type(t, grams)
-        total_kcal += kcal
-        ingredients.append({
-            "type": t,
-            "grams": grams,
-            "kcal": kcal
-        })
+    # Return success response
+    return jsonify({"success": True}), 201
 
-    kcal_per_serving = round(total_kcal / servings, 2)
 
-    # ✅ 返回 JSON 数据
-    return jsonify({
-        "title": title,
-        "servings": servings,
-        "total_kcal": round(total_kcal, 2),
-        "kcal_per_serving": kcal_per_serving,
-        "ingredients": ingredients
-    })
+@main.route('/analytics/daily_calories', methods=['GET'])
+@login_required
+def get_daily_calories():
+    """
+    Endpoint to get daily calories (one serving) for the last 7 days.
+    """
+    user_id = get_user_id_from_request()
+    if user_id is None:
+        return jsonify({"error": "Invalid sharing ID"}), 400
+
+    data = daily_calories_one_serving(user_id)
+    return jsonify(data)
+
+
+@main.route('/analytics/veg_meat_proportion', methods=['GET'])
+@login_required
+def get_veg_meat_proportion():
+    """
+    Endpoint to get the proportion of vegetables and meat for the last 7 days.
+    """
+    user_id = get_user_id_from_request()
+    if user_id is None:
+        return jsonify({"error": "Invalid sharing ID"}), 400
+    
+    data = proportion_of_veg_and_meat(user_id)
+    return jsonify(data)
+
+
+@main.route('/analytics/daily_grams', methods=['GET'])
+@login_required
+def get_daily_grams():
+    """
+    Endpoint to get daily grams of food (one serving) for the last 7 days.
+    """
+    user_id = get_user_id_from_request()
+    if user_id is None:
+        return jsonify({"error": "Invalid sharing ID"}), 400
+
+    data = daily_grams_of_food_one_serving(user_id)
+    return jsonify(data)
+
+
+@main.route('/analytics/daily_protein', methods=['GET'])
+@login_required
+def get_daily_protein():
+    """
+    Endpoint to get daily protein (one serving) for the last 7 days.
+    """
+    user_id = get_user_id_from_request()
+    if user_id is None:
+        return jsonify({"error": "Invalid sharing ID"}), 400
+
+    data = daily_protein_one_serving(user_id)
+    return jsonify(data)
+
+
+def get_user_id_from_request():
+    """
+    Retrieve the user ID based on the request.
+    If a sharing_id is provided, return the sender's user ID.
+    Otherwise, return the current user's ID.
+
+    :return: The user ID or None if the sharing_id is invalid.
+    """
+    sharing_id = request.args.get("sharing_id")
+    if sharing_id:
+        user_id = get_sender_id_by_sharing_id(sharing_id)
+        if not user_id:
+            return None  # Invalid sharing_id
+        return user_id
+    return current_user.get_id()
+
+
