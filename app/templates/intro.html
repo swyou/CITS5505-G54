@@ -78,15 +78,6 @@
 
   <script src="{{ url_for('static', filename='js/login_main.js') }}"></script>
 
-
-  <script>
-    function confirmLogout() {
-      if (confirm("Are you sure you want to log out?")) {
-        window.location.href = "{{ url_for('auth.logout') }}";
-      }
-    }
-  </script>
-
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const flash = document.querySelector('.custom-flash');
