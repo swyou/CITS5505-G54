@@ -40,6 +40,17 @@ def create_sharing(sender_id, receiver_id, message):
     db.session.commit()
     return new_sharing
 
+
+def get_existing_sharing(sender_id, receiver_id):
+    """
+    Check if a sharing already exists between the sender and receiver.
+
+    :param sender_id: The ID of the sender.
+    :param receiver_id: The ID of the receiver.
+    :return: The existing sharing if found, otherwise None.
+    """
+    return Sharing.query.filter_by(sender_id=sender_id, receiver_id=receiver_id).first()
+
 # 每 100g 平均热量
 AVG_KCAL_TABLE = {
     "meat": 200,

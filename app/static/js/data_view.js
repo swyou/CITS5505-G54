@@ -1,116 +1,104 @@
 $(document).ready(function () {
-    const sharedReportsDropdown = $("#sharedReports");
-  
-    // Flags to track whether each chart has been loaded
-    const chartLoaded = {
-      calories: false,
-      vegMeat: false,
-      grams: false,
-      protein: false,
-    };
-  
-    // Fetch shared reports and populate the dropdown
-    $.getJSON("/sharings", function (sharings) {
-      sharings.forEach(function (sharing) {
-        sharedReportsDropdown.append(
-          `<option value="${sharing.id}">Shared by ${sharing.sender_username}</option>`
-        );
-      });
-    }).fail(function () {
-      console.error("Error fetching shared reports.");
+  const sharedReportsDropdown = $("#sharedReports");
+  let reportVal = "myself";
+
+  // Flags to track whether each chart has been loaded
+  const chartLoaded = {
+    calories: false,
+    vegMeat: false,
+    grams: false,
+    protein: false,
+  };
+
+  // Variables to store chart instances
+  let caloriesChartInstance = null;
+  let vegMeatChartInstance = null;
+  let gramsChartInstance = null;
+  let proteinChartInstance = null;
+
+  // Fetch shared reports and populate the dropdown
+  $.getJSON("/sharings", function (sharings) {
+    sharings.forEach(function (sharing) {
+      sharedReportsDropdown.append(
+        `<option value="${sharing.id}">${sharing.sender}</option>`
+      );
     });
-  
-    // Handle dropdown selection
-    sharedReportsDropdown.on("change", function () {
-      const selectedValue = $(this).val();
-  
-      if (selectedValue === "myself") {
-        loadDataForUser();
-      } else {
-        loadDataForSharing(selectedValue);
-      }
+  }).fail(function () {
+    console.error("Error fetching shared reports.");
+  });
+
+  // Handle dropdown selection
+  sharedReportsDropdown.on("change", function () {
+    reportVal = $(this).val();
+    const selectedValue = $(this).val();
+
+    // Reset all chartLoaded flags to false
+    Object.keys(chartLoaded).forEach((key) => {
+      chartLoaded[key] = false;
     });
-  
-    // Function to load data for the current user
-    function loadDataForUser() {
-      loadCaloriesChart("/analytics/daily_calories");
+
+    // Activate the first tab (e.g., #calories)
+    $('a[data-bs-toggle="tab"][href="#calories"]').tab("show");
+
+    if (selectedValue === "myself") {
+      loadDataForUser();
+    } else {
+      loadDataForSharing(selectedValue);
     }
-  
-    // Function to load data for a specific sharing
-    function loadDataForSharing(sharingId) {
-      loadCaloriesChart(`/analytics/daily_calories?sharing_id=${sharingId}`);
-    }
-  
-    // Load calories chart
-    function loadCaloriesChart(url) {
-      if (chartLoaded.calories) return; // Skip if already loaded
-  
-      $.getJSON(url, function (data) {
-        updateCaloriesChart(data);
-        chartLoaded.calories = true; // Mark as loaded
-      }).fail(function () {
-        console.error("Error loading daily calories.");
-      });
-    }
-  
-    // Load veg-meat proportion chart
-    function loadVegMeatChart(url) {
-      if (chartLoaded.vegMeat) return; // Skip if already loaded
-  
-      $.getJSON(url, function (data) {
-        updateVegMeatChart(data);
-        chartLoaded.vegMeat = true; // Mark as loaded
-      }).fail(function () {
-        console.error("Error loading veg-meat proportion.");
-      });
-    }
-  
-    // Load grams chart
-    function loadGramsChart(url) {
-      if (chartLoaded.grams) return; // Skip if already loaded
-  
-      $.getJSON(url, function (data) {
-        updateGramsChart(data);
-        chartLoaded.grams = true; // Mark as loaded
-      }).fail(function () {
-        console.error("Error loading daily grams.");
-      });
-    }
-  
-    // Load protein chart
-    function loadProteinChart(url) {
-      if (chartLoaded.protein) return; // Skip if already loaded
-  
-      $.getJSON(url, function (data) {
-        updateProteinChart(data);
-        chartLoaded.protein = true; // Mark as loaded
-      }).fail(function () {
-        console.error("Error loading daily protein.");
-      });
-    }
-  
-    // Initialize charts when their tabs are shown
-    $('a[data-bs-toggle="tab"]').on("shown.bs.tab", function (e) {
-      const target = $(e.target).attr("href"); // Get the target tab ID
-  
-      if (target === "#calories") {
+  });
+
+  // Handle tab activation
+  $('a[data-bs-toggle="tab"]').on("shown.bs.tab", function (e) {
+    const target = $(e.target).attr("href"); // Get the target tab ID
+
+    if (reportVal === "myself") {
+      // Load data for the current user
+      if (target === "#calories" && !chartLoaded.calories) {
         loadCaloriesChart("/analytics/daily_calories");
-      } else if (target === "#veg-meat") {
+      } else if (target === "#veg-meat" && !chartLoaded.vegMeat) {
         loadVegMeatChart("/analytics/veg_meat_proportion");
-      } else if (target === "#grams") {
+      } else if (target === "#grams" && !chartLoaded.grams) {
         loadGramsChart("/analytics/daily_grams");
-      } else if (target === "#protein") {
+      } else if (target === "#protein" && !chartLoaded.protein) {
         loadProteinChart("/analytics/daily_protein");
       }
-    });
-  
-    // Example function to update the calories chart
-    function updateCaloriesChart(data) {
+    } else {
+      // Load data for the selected sharing
+      if (target === "#calories" && !chartLoaded.calories) {
+        loadCaloriesChart(`/analytics/daily_calories?sharing_id=${reportVal}`);
+      } else if (target === "#veg-meat" && !chartLoaded.vegMeat) {
+        loadVegMeatChart(`/analytics/veg_meat_proportion?sharing_id=${reportVal}`);
+      } else if (target === "#grams" && !chartLoaded.grams) {
+        loadGramsChart(`/analytics/daily_grams?sharing_id=${reportVal}`);
+      } else if (target === "#protein" && !chartLoaded.protein) {
+        loadProteinChart(`/analytics/daily_protein?sharing_id=${reportVal}`);
+      }
+    }
+  });
+
+  // Function to load data for the current user
+  function loadDataForUser() {
+    loadCaloriesChart("/analytics/daily_calories");
+  }
+
+  // Function to load data for a specific sharing
+  function loadDataForSharing(sharingId) {
+    loadCaloriesChart(`/analytics/daily_calories?sharing_id=${sharingId}`);
+  }
+
+  // Load calories chart
+  function loadCaloriesChart(url) {
+    if (chartLoaded.calories) return; // Skip if already loaded
+
+    $.getJSON(url, function (data) {
+      if (caloriesChartInstance) {
+        caloriesChartInstance.destroy(); // Destroy existing chart instance
+      }
       const ctx = $("#caloriesChart")[0].getContext("2d");
-      new Chart(ctx, {
+      caloriesChartInstance = new Chart(ctx, {
         type: "line",
         data: {
-          labels: data.map((entry) => entry.date), // Use the date instead of the day of the week
+          labels: data.map((entry) => entry.date),
           datasets: [
             {
               label: "Calories",
@@ -131,25 +119,35 @@ $(document).ready(function () {
             x: {
               title: {
                 display: true,
-                text: "Date", // Update the x-axis title to "Date"
+                text: "Date",
               },
             },
             y: {
               title: {
                 display: true,
-                text: "Calories", // Keep the y-axis title as "Calories"
+                text: "Calories",
               },
               beginAtZero: true,
             },
           },
         },
       });
-    }
-  
-    // Example function to update the veg-meat proportion chart
-    function updateVegMeatChart(data) {
+      chartLoaded.calories = true; // Mark as loaded
+    }).fail(function () {
+      console.error("Error loading daily calories.");
+    });
+  }
+
+  // Load veg-meat proportion chart
+  function loadVegMeatChart(url) {
+    if (chartLoaded.vegMeat) return; // Skip if already loaded
+
+    $.getJSON(url, function (data) {
+      if (vegMeatChartInstance) {
+        vegMeatChartInstance.destroy(); // Destroy existing chart instance
+      }
       const ctx = $("#vegMeatChart")[0].getContext("2d");
-      new Chart(ctx, {
+      vegMeatChartInstance = new Chart(ctx, {
         type: "pie",
         data: {
           labels: ["Vegetable", "Meat"],
@@ -164,15 +162,25 @@ $(document).ready(function () {
           responsive: true,
         },
       });
-    }
-  
-    // Example function to update the grams chart
-    function updateGramsChart(data) {
+      chartLoaded.vegMeat = true; // Mark as loaded
+    }).fail(function () {
+      console.error("Error loading veg-meat proportion.");
+    });
+  }
+
+  // Load grams chart
+  function loadGramsChart(url) {
+    if (chartLoaded.grams) return; // Skip if already loaded
+
+    $.getJSON(url, function (data) {
+      if (gramsChartInstance) {
+        gramsChartInstance.destroy(); // Destroy existing chart instance
+      }
       const ctx = $("#gramsChart")[0].getContext("2d");
-      new Chart(ctx, {
+      gramsChartInstance = new Chart(ctx, {
         type: "bar",
         data: {
-          labels: data.map((entry) => entry.date), // Use the date instead of the day of the week
+          labels: data.map((entry) => entry.date),
           datasets: [
             {
               label: "Grams",
@@ -194,28 +202,38 @@ $(document).ready(function () {
             x: {
               title: {
                 display: true,
-                text: "Date", // Update the x-axis title to "Date"
+                text: "Date",
               },
             },
             y: {
               title: {
                 display: true,
-                text: "Grams", // Keep the y-axis title as "Grams"
+                text: "Grams",
               },
               beginAtZero: true,
             },
           },
         },
       });
-    }
-  
-    // Example function to update the protein chart
-    function updateProteinChart(data) {
+      chartLoaded.grams = true; // Mark as loaded
+    }).fail(function () {
+      console.error("Error loading daily grams.");
+    });
+  }
+
+  // Load protein chart
+  function loadProteinChart(url) {
+    if (chartLoaded.protein) return; // Skip if already loaded
+
+    $.getJSON(url, function (data) {
+      if (proteinChartInstance) {
+        proteinChartInstance.destroy(); // Destroy existing chart instance
+      }
       const ctx = $("#proteinChart")[0].getContext("2d");
-      new Chart(ctx, {
+      proteinChartInstance = new Chart(ctx, {
         type: "line",
         data: {
-          labels: data.map((entry) => entry.date), // Use the date instead of the day of the week
+          labels: data.map((entry) => entry.date),
           datasets: [
             {
               label: "Protein",
@@ -236,21 +254,24 @@ $(document).ready(function () {
             x: {
               title: {
                 display: true,
-                text: "Date", // Update the x-axis title to "Date"
+                text: "Date",
               },
             },
             y: {
               title: {
                 display: true,
-                text: "Protein (g)", // Keep the y-axis title as "Protein (g)"
+                text: "Protein (g)",
               },
               beginAtZero: true,
             },
           },
         },
       });
-    }
-  
-    // Load the first chart (calories) by default
-    loadDataForUser();
-  });
+      chartLoaded.protein = true; // Mark as loaded
+    }).fail(function () {
+      console.error("Error loading daily protein.");
+    });
+  }
+
+  loadDataForUser();
+});

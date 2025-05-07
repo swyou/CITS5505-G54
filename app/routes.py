@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from .service import *
-import json
 
 main = Blueprint('main', __name__)
 
@@ -38,7 +37,14 @@ def upload():
 def list_sharings():
     user_id = current_user.get_id()
     sharings = get_sharings_by_receiver(user_id)
-    return jsonify(sharings)
+    result = [
+        {
+            "id": sharing.id,
+            "sender": sharing.sender.username
+        }
+        for sharing in sharings
+    ]
+    return jsonify(result)
 
 
 @main.route('/users', methods=['GET'])
@@ -53,16 +59,21 @@ def list_users():
 @main.route('/share', methods=['POST'])
 @login_required
 def share_with():
-    to_user_id = request.form.get("to_user_id")
-    message = request.form.get("message")
-
-    if not to_user_id or not message:
-        return jsonify({"error": "Missing required parameters"}), 400
+    data = request.get_json()  # Parse JSON payload
+    to_user_id = data.get("to_user_id")
+    if to_user_id is None:
+        return jsonify({"error": "Invalid to user ID"}), 400
 
     user_id = current_user.get_id()
-    sharing = create_sharing(sender_id=user_id, receiver_id=to_user_id, message=message)
+    # Check if a sharing already exists
+    existing_sharing = get_existing_sharing(sender_id=user_id, receiver_id=to_user_id)
+    if existing_sharing:
+        return jsonify({"error": "You have already shared data with this user."}), 400
 
-    return jsonify({"success": True, "sharing": sharing}), 201
+    # Create a new sharing
+    sharing = create_sharing(sender_id=user_id, receiver_id=to_user_id, message="")
+
+    return jsonify({"success": True}), 201
 
 
 @main.route('/upload', methods=['POST'])
