@@ -27,15 +27,15 @@ $(document).ready(function () {
       contentType: 'application/json',
       data: JSON.stringify({to_user_id: selectedUserId}),
       success: function (response) {
-        alert('Data shared successfully!');
+        if (response.exist){
+            alert('You have already shared data with this user.');
+        }else {
+            alert('Data shared successfully!');
+        } 
       },
       error: function (xhr) {
         const errorResponse = JSON.parse(xhr.responseText);
-        if (errorResponse.error === 'shared') {
-          alert('You have already shared data with this user.');
-        } else {
-          alert('Failed to share data. Please try again.');
-        }
+        alert('Failed to share data. Please try again.');
       }
     });
   });
