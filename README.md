@@ -31,9 +31,9 @@ For Linux/MacOS
 source venv/bin/activate
 ```
 
-#### 4. Install flask
+#### 4. Install requirements
 ```
-pip install Flask
+pip install -r requirements.txt
 
 ```
 

@@ -24,58 +24,12 @@
     {% endwith %}
   </div>
 
-
-  <div class="header">
-    <div class="main-container header-container">
-      <div class="logo-image">
-        <a href="{{ url_for('auth.intro') }}" title="SmartBite">
-          <img width="200" height="50" src="{{ url_for('static', filename='images/logo.svg') }}" alt="SmartBite Logo" />
-        </a>
-      </div>
-
-      <div class="right-header">
-        <div class="user_pirc d-flex align-items-center">
-          <img src="{{ url_for('static', filename='images/13_Food_Servant-512.webp') }}" alt="User Profile" />
-          <div class="name ms-2">{{ username }}</div>
-          <button class="btn btn-outline-danger btn-sm ms-3" onclick="confirmLogout()">Logout</button>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
+  {% include 'header.html' %}
 
   <div class="main-content">
     <div class="main-container">
       <!-- Sidebar -->
-      <div class="side-bar-l">
-        <ul>
-          <li>
-            <a href="{{ url_for('auth.intro') }}" class="side-bar-active">
-              <i class="bi-house-door"></i>
-              <span>Introduction</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.upload') }}" class="show_login">
-              <i class="bi-cloud-upload"></i>
-              <span>Upload Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.data') }}" class="show_login">
-              <i class="bi-bar-chart-line"></i>
-              <span>Visualise Data</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('auth.share') }}" class="show_login">
-              <i class="bi-share"></i>
-              <span>Share Data</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      {% include 'side.html' %}
 
       <!-- Main Content -->
       <div class="main-inner">
@@ -119,27 +73,10 @@
     </div> <!-- /main-container -->
   </div> <!-- /main-content -->
 
-  <div class="footer">
-    <div class="container text-center">
-      <p>© 2025 Group 54. All Rights Reserved</p>
-      <p>
-        <i class="bi-github"></i>
-        <a href="https://github.com/swyou/CITS5505-G54" target="_blank">GitHub Repository</a>
-      </p>
-      <p><a href="#top">Back to Top</a></p>
-    </div>
-  </div>
+
+  {% include 'footer.html' %}
 
   <script src="{{ url_for('static', filename='js/login_main.js') }}"></script>
-
-
-  <script>
-    function confirmLogout() {
-      if (confirm("Are you sure you want to log out?")) {
-        window.location.href = "{{ url_for('auth.logout') }}";
-      }
-    }
-  </script>
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
