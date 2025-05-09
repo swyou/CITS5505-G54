@@ -2,16 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>SmartBite - Visualise Data</title>
+    <title>SmartBite - Share Data</title>
     <!-- CSS Files -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    
-    <!-- global style -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Global Style -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!-- page specific style -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/share.css') }}"> -->
+    <!-- Page-Specific Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/share.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -24,59 +26,34 @@
         <!-- Sidebar -->
         {% include 'side.html' %}
 
-
-    </div>
-    <div class="main-inner">
-        <div class="share-data-section">
-            <h1 class="text-center">Share Your Data</h1>
-            <p class="text-center">Select a user to share your data with:</p>
+        <!-- Main Inner Content -->
+        <div class="main-inner">
+          <div class="share-data-section">
+            <h1 class="text-center mb-4">Share Your Data</h1>
+            <p class="text-center mb-4">Select a user to share your data with:</p>
             
             <!-- Dropdown for selecting users -->
-            <div class="mb-4">
-              <label for="userDropdown" class="form-label">Select User:</label>
+            <div class="form-group mb-4">
               <select id="userDropdown" class="form-select">
                 <option value="" selected disabled>Select a user</option>
                 <!-- Options will be dynamically populated -->
               </select>
             </div>
 
-            <button id="shareButton" class="btn btn-primary">Share Data</button>
+            <!-- Share Button -->
+            <div class="text-center">
+              <button id="shareButton" class="btn btn-yellow">Share Data</button>
+            </div>
           </div>
-
-          <script>
-  // Populate the dropdown with dummy users
-  const dummyUsers = [
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' }
-  ];
-
-  const dropdown = document.getElementById('userDropdown');
-  dummyUsers.forEach(user => {
-    const option = document.createElement('option');
-    option.value = user.id;
-    option.textContent = user.name;
-    dropdown.appendChild(option);
-  });
-
-  document.getElementById('shareButton').addEventListener('click', function () {
-    const selectedUserId = document.getElementById('userDropdown').value;
-    if (selectedUserId) {
-      alert(`Data shared successfully with user ID: ${selectedUserId}`);
-    } else {
-      alert('Please select a user to share data with.');
-    }
-  });
-</script>
         </div>
+      </div>
     </div>
-</div>
+
     <!-- Footer -->
     {% include 'footer.html' %}
+
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- <script src="{{ url_for('static', filename='js/data_view.js') }}"></script> -->
-
-    
+    <script src="{{ url_for('static', filename='js/share.js') }}"></script>
   </body>
 </html>

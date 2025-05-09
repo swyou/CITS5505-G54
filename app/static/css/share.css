@@ -1,0 +1,32 @@
+/* Ensure the main-inner fills the available space */
+.main-inner {
+    min-height: calc(100vh - 150px); /* Adjust height to include header and footer */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    padding: 20px; /* Add padding for spacing */
+}
+
+/* Style the dropdown */
+#userDropdown {
+    max-width: 500px; /* Make the dropdown narrower */
+    margin: 0 auto; /* Center the dropdown */
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Style the share button */
+.btn-yellow {
+    background-color: #ffc107; /* Yellow color */
+    color: #000; /* Black text for contrast */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-yellow:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+}
