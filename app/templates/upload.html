@@ -13,7 +13,6 @@
   <!-- Header -->
   {% include 'header.html' %}
 
-
   <!-- Main Content -->
   <div class="main-content">
     <div class="main-container">
@@ -34,8 +33,8 @@
 
             <!-- Ingredients -->
             <div id="ingredients-list">
-              <div class="ingredient-row d-flex gap-2 mb-2">
-                <select name="ingredient_type[]" class="form-select" style="width: 15%;">
+              <div class="ingredient-row d-flex gap-2 mb-2 align-items-center">
+                <select name="ingredient_type[]" class="form-select" style="width: 30%;">
                   <option value="meat">Meat</option>
                   <option value="vegetable">Vegetable</option>
                 </select>
@@ -47,6 +46,7 @@
                   <option value="custom">Other...</option>
                 </select>
                 <input type="number" name="ingredient_grams_custom[]" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient(this)">×</button>
               </div>
             </div>
 
@@ -70,12 +70,6 @@
               <input type="date" name="date" class="form-control" id="recipe-date" required />
             </div>
 
-            <!-- Image Upload (optional) -->
-            <!-- <div class="form-group mb-3">
-              <label>Dish Image (optional)</label>
-              <input type="file" name="image" class="form-control-file" />
-            </div> -->
-
             <button type="submit" class="btn-orange mt-2">Submit Recipe</button>
           </form>
         </div>
@@ -88,19 +82,18 @@
 
   <!-- JS -->
   <script>
-    // Set the default date to today
     document.addEventListener("DOMContentLoaded", function () {
       const dateInput = document.getElementById("recipe-date");
-      const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
-      dateInput.value = today; // Set the default value
+      const today = new Date().toISOString().split("T")[0];
+      dateInput.value = today;
     });
 
     function addIngredient() {
       const container = document.getElementById("ingredients-list");
       const row = document.createElement("div");
-      row.className = "ingredient-row d-flex gap-2 mb-2";
+      row.className = "ingredient-row d-flex gap-2 mb-2 align-items-center";
       row.innerHTML = `
-        <select name="ingredient_type[]" class="form-select" style="width: 15%;">
+        <select name="ingredient_type[]" class="form-select" style="width: 30%;">
           <option value="meat">Meat</option>
           <option value="vegetable">Vegetable</option>
         </select>
@@ -112,6 +105,7 @@
           <option value="custom">Other...</option>
         </select>
         <input type="number" name="ingredient_grams_custom[]" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
+        <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient(this)">×</button>
       `;
       container.appendChild(row);
     }
@@ -121,8 +115,17 @@
       customInput.style.display = selectEl.value === "custom" ? "block" : "none";
     }
 
+    function removeIngredient(button) {
+      const container = document.getElementById("ingredients-list");
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+      } else {
+        alert("At least one ingredient must remain.");
+      }
+    }
+
     document.querySelector('form').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent the default form submission
+      event.preventDefault();
 
       const form = event.target;
       const formData = new FormData(form);
@@ -133,16 +136,16 @@
       })
         .then((response) => {
           if (response.ok) {
-            alert('Recipe submitted successfully!'); // Show success alert
-            window.location.reload(); // Refresh the page
+            alert('Recipe submitted successfully!');
+            window.location.reload();
           } else {
             return response.json().then((data) => {
-              alert(`Error: ${data.error || 'Something went wrong!'}`); // Show error alert
+              alert(`Error: ${data.error || 'Something went wrong!'}`);
             });
           }
         })
         .catch((error) => {
-          alert(`Error: ${error.message}`); // Show error alert for network issues
+          alert(`Error: ${error.message}`);
         });
     });
   </script>
