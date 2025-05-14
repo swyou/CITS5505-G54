@@ -1,27 +1,23 @@
 # app/__init__.py
-import os
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager, current_user
-from dotenv import load_dotenv
-from flask_wtf.csrf import CSRFProtect
+
 
 db = SQLAlchemy()
+migrate = Migrate()
 login_manager = LoginManager()
 
-# Load variables from .env into system environment
-load_dotenv()
 
-def create_app():
+def create_app(config):
     app = Flask(__name__, static_folder='static', template_folder='templates')
-    app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "UWA_CITS5505_G54_UYCOOS09V")
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///foodie.db")
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = \
-        os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS", "false").lower() == "true"
-    app.config['DEBUG'] = os.environ.get("DEBUG", "false").lower() == "true"
+    app.config.from_object(config)
 
     # init extentiosn
     db.init_app(app)
+    migrate.init_app(app, db)
+    
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 

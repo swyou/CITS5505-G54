@@ -14,16 +14,14 @@ def generate_salt():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            salted_input = form.password.data + user.salt
-            input_hash = hashlib.sha256(salted_input.encode()).hexdigest()
-            if input_hash == user.password_hash:
-                login_user(user)
-                flash("Login successful!", "success")
-                return redirect(url_for('main.intro'))
+        user = check_login(form.username.data, form.password.data)
+        if user is not None:
+            flash("Login successful!", "success")
+            login_user(user)
+            return redirect(url_for('main.intro'))
         flash("Invalid username or password.", category="login")
     return render_template('login.html', form=form, show_register=False)
+
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -36,23 +34,40 @@ def register():
             flash("Passwords do not match.", category="register")
             return render_template('login.html', form=form, show_register=True)
         
-        existing_user = User.query.filter_by(username=form.username.data).first()
-        if existing_user:
-            flash("Username already exists.", category="register")
-        else:
-            salt = generate_salt()
-            hash_pw = hashlib.sha256((password + salt).encode()).hexdigest()
-            new_user = User(username=form.username.data, password_hash=hash_pw, salt=salt)
-            db.session.add(new_user)
-            db.session.commit()
+        if creat_user(form.username.data, password):
             flash("Registration successful. Please login.", "success")
             return redirect(url_for('auth.login'))
+        # has duplicate user name
+        flash("Username already exists.", category="register")
     else:
         print("❌ Register form errors:", form.errors)
         flash("Registration failed. Please ensure the username >= 3 characters and the password >= 6 characters.", category="register")
 
 
     return render_template('login.html', form=form, show_register=True)
+
+
+
+def creat_user(username, password):
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return False
+    salt = generate_salt()
+    hash_pw = hashlib.sha256((password + salt).encode()).hexdigest()
+    new_user = User(username=username, password_hash=hash_pw, salt=salt)
+    db.session.add(new_user)
+    db.session.commit()
+    return True
+
+
+def check_login(username, password):
+    user = User.query.filter_by(username=username).first()
+    if user:
+        salted_input = password + user.salt
+        input_hash = hashlib.sha256(salted_input.encode()).hexdigest()
+        if input_hash == user.password_hash:
+            return user
+    return None
 
 
 @auth_bp.route('/logout')
