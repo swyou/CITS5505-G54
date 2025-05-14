@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from .service import *
+from .forms import RecipeForm
 
 main = Blueprint('main', __name__)
 
@@ -14,7 +15,7 @@ def index():
 @main.route('/intro')
 @login_required
 def intro():
-    return render_template('intro.html', username=current_user.username)
+    return render_template('intro.html')
 
 
 @main.route('/data')
@@ -27,10 +28,11 @@ def data():
 def share():
     return render_template('share.html', username=current_user.username)
 
-@main.route('/upload')
+@main.route('/upload', methods=['GET'])
 @login_required
 def upload():
-    return render_template('upload.html', username=current_user.username)
+    form = RecipeForm()
+    return render_template('upload.html', form=form, username=current_user.username)
 
 @main.route('/sharings', methods=['GET'])
 @login_required
@@ -56,7 +58,7 @@ def list_users():
     return jsonify(users)
 
 
-@main.route('/share', methods=['POST'])
+@main.route('/share_data', methods=['POST'])
 @login_required
 def share_with():
     data = request.get_json()  # Parse JSON payload
@@ -76,29 +78,23 @@ def share_with():
     return jsonify({"success": True}), 201
 
 
-@main.route('/upload', methods=['POST'])
+@main.route('/upload_data', methods=['POST'])
 @login_required
 def handle_upload():
-    title = request.form.get("title")
-    servings = int(request.form.get("servings") or 1)
-    date_str = request.form.get("date")
-    try:
-        # Validate if the date is in a proper timestamp format
-        date = datetime.strptime(date_str, "%Y-%m-%d")
-    except (ValueError, TypeError):
-        return jsonify({"error": "Invalid date format. Expected YYYY-MM-DD."}), 400
-    user_id = current_user.get_id()
-
-    # Get multiple ingredients (arrays)
-    types = request.form.getlist("ingredient_type[]")
-    grams_choices = request.form.getlist("ingredient_grams[]")
-    grams_customs = request.form.getlist("ingredient_grams_custom[]")
-
-    # Delegate processing and saving to db
-    save_recipe(user_id, title, date, servings, types, grams_choices, grams_customs)
-
-    # Return success response
-    return jsonify({"success": True}), 201
+    form = RecipeForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        servings = form.servings.data or 1
+        date = form.date.data
+        user_id = current_user.get_id()
+        types = form.ingredient_type.data
+        grams_choices = form.ingredient_grams.data
+        grams_customs = form.ingredient_grams_custom.data
+        # user_id, title, date, servings, types, grams_choices, grams_customs
+        save_recipe(user_id, title, date, servings, types, grams_choices, grams_customs)
+        return jsonify({"success": True}), 201
+    else:
+        return jsonify({"error": "Invalid form data"}), 400
 
 
 @main.route('/analytics/daily_calories', methods=['GET'])

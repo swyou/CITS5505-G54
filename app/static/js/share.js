@@ -22,7 +22,7 @@ $(document).ready(function () {
 
     // Send the selected user ID to the backend
     $.ajax({
-      url: '/share',
+      url: '/share_data',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({to_user_id: selectedUserId}),

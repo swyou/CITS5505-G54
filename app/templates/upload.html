@@ -25,6 +25,10 @@
           <h1 class="intro-title mb-3">Upload Your Recipe</h1>
 
           <form method="POST" action="{{ url_for('main.handle_upload') }}" enctype="multipart/form-data">
+            
+            <!-- Hidden csrf_token field -->
+            {{ form.hidden_tag() }}
+
             <!-- Dish Name -->
             <div class="form-group mb-3">
               <label>Dish Name</label>
@@ -34,18 +38,18 @@
             <!-- Ingredients -->
             <div id="ingredients-list">
               <div class="ingredient-row d-flex gap-2 mb-2 align-items-center">
-                <select name="ingredient_type[]" class="form-select" style="width: 30%;">
+                <select name="ingredient_type-0" class="form-select" style="width: 30%;">
                   <option value="meat">Meat</option>
                   <option value="vegetable">Vegetable</option>
                 </select>
-                <input type="text" name="ingredient_name[]" placeholder="Ingredient Name" class="form-control" required />
-                <select name="ingredient_grams[]" class="form-select" style="width: 20%;" onchange="toggleCustomInput(this)">
+                <input type="text" name="ingredient_name-0" placeholder="Ingredient Name" class="form-control" required />
+                <select name="ingredient_grams-0" class="form-select" style="width: 20%;" onchange="toggleCustomInput(this)">
                   <option value="50">50g</option>
                   <option value="100">100g</option>
                   <option value="150">150g</option>
                   <option value="custom">Other...</option>
                 </select>
-                <input type="number" name="ingredient_grams_custom[]" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
+                <input type="number" name="ingredient_grams_custom-0" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
                 <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient(this)">×</button>
               </div>
             </div>
@@ -88,26 +92,29 @@
       dateInput.value = today;
     });
 
+    let ingredientIndex = 1; // Start from 1 because 0 is already in the HTML
+
     function addIngredient() {
       const container = document.getElementById("ingredients-list");
       const row = document.createElement("div");
       row.className = "ingredient-row d-flex gap-2 mb-2 align-items-center";
       row.innerHTML = `
-        <select name="ingredient_type[]" class="form-select" style="width: 30%;">
+        <select name="ingredient_type-${ingredientIndex}" class="form-select" style="width: 30%;">
           <option value="meat">Meat</option>
           <option value="vegetable">Vegetable</option>
         </select>
-        <input type="text" name="ingredient_name[]" placeholder="Ingredient Name" class="form-control" required />
-        <select name="ingredient_grams[]" class="form-select" style="width: 20%;" onchange="toggleCustomInput(this)">
+        <input type="text" name="ingredient_name-${ingredientIndex}" placeholder="Ingredient Name" class="form-control" required />
+        <select name="ingredient_grams-${ingredientIndex}" class="form-select" style="width: 20%;" onchange="toggleCustomInput(this)">
           <option value="50">50g</option>
           <option value="100">100g</option>
           <option value="150">150g</option>
           <option value="custom">Other...</option>
         </select>
-        <input type="number" name="ingredient_grams_custom[]" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
+        <input type="number" name="ingredient_grams_custom-${ingredientIndex}" placeholder="Custom g" class="form-control custom-gram" style="display:none;" />
         <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient(this)">×</button>
       `;
       container.appendChild(row);
+      ingredientIndex++;
     }
 
     function toggleCustomInput(selectEl) {
