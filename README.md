@@ -2,6 +2,20 @@
 
 ## Introduction
 
+Our project is a recipe recording app called SmartBite. It is a personal food analytics companion, designed to help you monitor your dietary habits with precision. By uploading your daily meals, you can track calorie intake, protein intake, and nutritional quality over time. Our intelligent system provides instant feedback and tailored insights to support your health and fitness goals, whether you're aiming to lose weight, build muscle, or simply eat more mindfully.
+
+Upload your meal data effortlessly through our user-friendly interface. Visualize your eating patterns with dynamic charts and graphs that highlight trends and potential areas for improvement. Share your progress securely with friends, nutritionists and stay motivated together! SmartBite empowers you to turn everyday eating into meaningful, measurable progress toward a healthier lifestyle.
+
+## Team
+
+| UWA ID    | Name           | GitHub Username |
+|-----------|----------------|-----------------|
+| 12345678  | Alice Smith    | @alice-smith    |
+| 23456789  | Bob Johnson    | @bobjohnson     |
+| 34567890  | Charlie Zhang  | @charliezhang   |
+| 45678901  | Dana Lee       | @danalee        |
+
+
 ## Environment & Development 
 
 ### Prerequisites
