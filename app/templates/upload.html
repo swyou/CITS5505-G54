@@ -74,7 +74,7 @@
               <input type="date" name="date" class="form-control" id="recipe-date" required />
             </div>
 
-            <button type="submit" class="btn-orange mt-2">Submit Recipe</button>
+            <button id="submit-recipe" type="submit" class="btn-orange mt-2">Submit Recipe</button>
           </form>
         </div>
       </div>
@@ -136,6 +136,10 @@
 
       const form = event.target;
       const formData = new FormData(form);
+      console.log("Form data:");
+      for (let [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+      }
 
       fetch(form.action, {
         method: form.method,

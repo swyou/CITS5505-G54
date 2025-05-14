@@ -81,7 +81,10 @@ def share_with():
 @main.route('/upload_data', methods=['POST'])
 @login_required
 def handle_upload():
+    print("Upload route called!")
     form = RecipeForm()
+    print("Received CSRF Token:", form.csrf_token.data)  # 打印接收到的 CSRF Token
+    print("Request form data:", request.form)  # 打印表单数据
     if form.validate_on_submit():
         title = form.title.data
         servings = form.servings.data or 1

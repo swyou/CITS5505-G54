@@ -8,12 +8,12 @@ Upload your meal data effortlessly through our user-friendly interface. Visualiz
 
 ## Team
 
-| UWA ID    | Name           | GitHub Username |
-|-----------|----------------|-----------------|
-| 12345678  | Alice Smith    | @alice-smith    |
-| 23456789  | Bob Johnson    | @bobjohnson     |
-| 34567890  | Charlie Zhang  | @charliezhang   |
-| 45678901  | Dana Lee       | @danalee        |
+| UWA ID   | Name        | GitHub Username                |
+| -------- | ----------- | ------------------------------ |
+| 24690471 | Songwen You | @swyou                         |
+| 22853272 | Simon Li    | @simonli66666 and @XihengLi666 |
+| 23746283 | Harry Zheng | @arryzheng                     |
+| 24565925 | Jue Hou     | @chuck20011002                 |
 
 
 ## Environment & Development 
@@ -51,8 +51,28 @@ pip install -r requirements.txt
 
 ```
 
-#### 5. Other
-According to `Flask` file structure, static html files are expected in `app/static/` directory.
+#### 5. Run App
+```bash
+python run.py
+```
+
+#### 6. Run Tests
+
+- Run unit tests
+
+```bash
+python -m unittest tests.unit_tests
+```
+
+
+
+- Run selenium tests
+
+```bash
+python -m unittest tests.selenium
+```
+
+
 
 
 ### Git related
