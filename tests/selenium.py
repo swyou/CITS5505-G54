@@ -127,7 +127,6 @@ class TestSelenium(unittest.TestCase):
             EC.alert_is_present()  # Assuming an alert is shown on success
         )
         alert = self.driver.switch_to.alert
-        print(alert.text)
         self.assertIn("Recipe submitted successfully", alert.text)
 
         alert.accept()
