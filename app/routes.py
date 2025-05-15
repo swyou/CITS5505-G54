@@ -45,7 +45,6 @@ def share():
             # Create a new sharing
             create_sharing(sender_id=user_id, receiver_id=to_user_id, message="")
             flash('Data shared successfully!', 'success')
-        return redirect(url_for('main.share'))
 
     return render_template('share.html', form=form, username=current_user.username)
 
@@ -66,7 +65,6 @@ def upload():
         save_recipe(user_id, title, date, servings, types, grams_choices, grams_customs)
 
         flash('Recipe uploaded successfully!', 'success')
-        return redirect(url_for('main.upload'))
     elif form.is_submitted():
 
         flash('Failed to upload recipe. Please check your input.', 'danger')
@@ -95,26 +93,6 @@ def list_users():
     # remove credential information, only returns name and id.
     users = [{"id": user.id, "username": user.username} for user in get_all_users_except_self(user_id)]
     return jsonify(users)
-
-
-@main.route('/share_data', methods=['POST'])
-@login_required
-def share_with():
-    data = request.get_json()  # Parse JSON payload
-    to_user_id = data.get("to_user_id")
-    if to_user_id is None:
-        return jsonify({"error": "Invalid to user ID"}), 400
-
-    user_id = current_user.get_id()
-    # Check if a sharing already exists
-    existing_sharing = get_existing_sharing(sender_id=user_id, receiver_id=to_user_id)
-    if existing_sharing:
-        return jsonify({"exist": True}), 201
-
-    # Create a new sharing
-    sharing = create_sharing(sender_id=user_id, receiver_id=to_user_id, message="")
-
-    return jsonify({"success": True}), 201
 
 
 @main.route('/analytics/daily_calories', methods=['GET'])
