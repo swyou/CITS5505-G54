@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from .service import *
-from .forms import RecipeForm
+from .forms import RecipeForm, ShareDataForm
 
 main = Blueprint('main', __name__)
 
@@ -23,15 +23,54 @@ def intro():
 def data():
     return render_template('data.html', username=current_user.username)
 
-@main.route('/share')
+@main.route('/share', methods=['GET', 'POST'])
 @login_required
 def share():
-    return render_template('share.html', username=current_user.username)
+    form = ShareDataForm()
+    
+    # Populate the user dropdown
+    user_id = current_user.get_id()
+    users = [{"id": user.id, "username": user.username} for user in get_all_users_except_self(user_id)]
+    form.user.choices = [(user['id'], user['username']) for user in users]
 
-@main.route('/upload', methods=['GET'])
+    if form.validate_on_submit():
+        to_user_id = form.user.data
+        user_id = current_user.get_id()
+
+        # Check if a sharing already exists
+        existing_sharing = get_existing_sharing(sender_id=user_id, receiver_id=to_user_id)
+        if existing_sharing:
+            flash('You have already shared data with this user.', 'warning')
+        else:
+            # Create a new sharing
+            create_sharing(sender_id=user_id, receiver_id=to_user_id, message="")
+            flash('Data shared successfully!', 'success')
+        return redirect(url_for('main.share'))
+
+    return render_template('share.html', form=form, username=current_user.username)
+
+@main.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
     form = RecipeForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        servings = form.servings.data or 1
+        date = form.date.data
+        user_id = current_user.get_id()
+        types = form.ingredient_type.data
+        grams_choices = form.ingredient_grams.data
+        grams_customs = form.ingredient_grams_custom.data
+        # user_id, title, date, servings, types, grams_choices, grams_customs
+        save_recipe(user_id, title, date, servings, types, grams_choices, grams_customs)
+
+        flash('Recipe uploaded successfully!', 'success')
+        return redirect(url_for('main.upload'))
+    elif form.is_submitted():
+
+        flash('Failed to upload recipe. Please check your input.', 'danger')
+
     return render_template('upload.html', form=form, username=current_user.username)
 
 @main.route('/sharings', methods=['GET'])
@@ -76,25 +115,6 @@ def share_with():
     sharing = create_sharing(sender_id=user_id, receiver_id=to_user_id, message="")
 
     return jsonify({"success": True}), 201
-
-
-@main.route('/upload_data', methods=['POST'])
-@login_required
-def handle_upload():
-    form = RecipeForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        servings = form.servings.data or 1
-        date = form.date.data
-        user_id = current_user.get_id()
-        types = form.ingredient_type.data
-        grams_choices = form.ingredient_grams.data
-        grams_customs = form.ingredient_grams_custom.data
-        # user_id, title, date, servings, types, grams_choices, grams_customs
-        save_recipe(user_id, title, date, servings, types, grams_choices, grams_customs)
-        return jsonify({"success": True}), 201
-    else:
-        return jsonify({"error": "Invalid form data"}), 400
 
 
 @main.route('/analytics/daily_calories', methods=['GET'])

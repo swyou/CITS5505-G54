@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, DateField, FieldList
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, DateField, FieldList, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo, Optional
 
 
@@ -37,3 +37,7 @@ class RecipeForm(FlaskForm):
                 )
                 return False
         return True
+
+class ShareDataForm(FlaskForm):
+    user = SelectField('Select a user', validators=[DataRequired()], coerce=int)
+    submit = SubmitField('Share Data')

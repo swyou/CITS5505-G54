@@ -8,7 +8,7 @@
 }
 
 /* Style the dropdown */
-#userDropdown {
+.form-select {
     max-width: 500px; /* Make the dropdown narrower */
     margin: 0 auto; /* Center the dropdown */
     padding: 10px;

@@ -122,14 +122,12 @@ class TestSelenium(unittest.TestCase):
         # Submit the form
         self.driver.find_element(By.ID, "submit-recipe").send_keys(Keys.ENTER)
 
-        # Wait for success alert or redirection
-        WebDriverWait(self.driver, 5).until(
-            EC.alert_is_present()  # Assuming an alert is shown on success
-        )
-        alert = self.driver.switch_to.alert
-        self.assertIn("Recipe submitted successfully", alert.text)
 
-        alert.accept()
+        # Wait for success flash message
+        flash_message = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "custom-flash"))
+        )
+        self.assertIn("Recipe uploaded successfully!", flash_message.text)
         self.logout()
 
 
@@ -176,34 +174,24 @@ class TestSelenium(unittest.TestCase):
         self.assertIn("Passwords do not match", flash_message.text)
 
     def test_share_data(self):
+        """Test sharing data with another user using Flask-WTF form."""
         self.login()
-        """Test sharing data with another user."""
         self.driver.get(f"{self.base_url}/share")
 
-        # Wait for the user dropdown to load
-        user_dropdown = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_element_located((By.ID, "userDropdown"))
-        )
-
         # Select a user from the dropdown
+        user_dropdown = self.driver.find_element(By.NAME, "user")
         user_dropdown.click()
         user_option = self.driver.find_element(By.XPATH, "//option[not(@disabled)]")  # Select the first enabled option
         user_option.click()
 
-        # Click the Share Data button
-        share_button = self.driver.find_element(By.ID, "shareButton")
-        share_button.click()
+        # Submit the form
+        self.driver.find_element(By.CLASS_NAME, "btn-yellow").click()
 
-        # Wait for the alert and verify the message
-        WebDriverWait(self.driver, 5).until(EC.alert_is_present())
-        alert = self.driver.switch_to.alert
-        alert_text = alert.text
-
-        # Check if the alert indicates success or already shared
-        self.assertTrue(
-            "Data shared successfully!" in alert_text or "You have already shared data with this user." in alert_text
+        # Wait for the flash message
+        flash_message = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "custom-flash"))
         )
-        alert.accept()
+        self.assertIn("Data shared successfully!", flash_message.text)
         self.logout()
 
 

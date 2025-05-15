@@ -8,3 +8,15 @@
       <p><a href="#top">Back to Top</a></p>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+    const flashMessage = document.querySelector('.custom-flash');
+    if (flashMessage) {
+        setTimeout(() => {
+        flashMessage.classList.add('fade-out');
+        setTimeout(() => flashMessage.remove(), 1000);
+        }, 3000); 
+    }
+});
+</script>
