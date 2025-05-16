@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 # models.py
-from . import db  # ✅ 从当前包中导入 db（db 定义在 app/__init__.py）
+from . import db  
 
 
 class User(UserMixin, db.Model):
