@@ -1,4 +1,4 @@
-/* 全局背景 */
+/* background image */
 body, html {
     height: 100%;
     margin: 0;
@@ -7,7 +7,7 @@ body, html {
   }
   
   .background {
-    background-image: url('../images/16food.jpg'); /* 使用你的SVG背景 */
+    background-image: url('../images/16food.jpg'); 
     background-repeat: repeat;
     background-size: 600px;
     position: fixed;
@@ -48,7 +48,7 @@ body, html {
   
 
 
-  /* 登录卡片样式 */
+  /* login container style */
   .login-container {
     height: 100vh;
     display: flex;
