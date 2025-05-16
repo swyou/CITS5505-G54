@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-  <!-- 背景图 -->
+  <!-- backgroundimage -->
   <div class="background"></div>
 
 
@@ -29,7 +29,7 @@
 
   
 
-  <!-- 登录容器 -->
+  <!-- login container -->
   <div class="login-container">
     <div class="login-card">
       <img src="{{ url_for('static', filename='images/logo.svg') }}" class="logo" alt="SmartBite Logo" />
@@ -39,7 +39,7 @@
 
 
 
-      <!-- 登录表单 -->
+      <!-- login template -->
       <form method="POST" action="{{ url_for('auth.login') }}" id="loginForm" class="form-section">
         {{ form.hidden_tag() }}
         <input type="text" class="form-control" name="username" placeholder="Username" required />
@@ -53,7 +53,7 @@
     
 
 
-      <!-- 注册表单 -->
+      <!-- register template -->
       <form method="POST" action="{{ url_for('auth.register') }}" id="registerForm" class="form-section d-none">
         {{ form.hidden_tag() }}
         <input type="text" class="form-control" name="username" placeholder="Username" required />
@@ -80,8 +80,8 @@
       if (flashMessage) {
         setTimeout(() => {
           flashMessage.classList.add('fade-out');
-          setTimeout(() => flashMessage.remove(), 1000); // 完全移除
-        }, 3000); // 5 秒后淡出
+          setTimeout(() => flashMessage.remove(), 1000); // remove
+        }, 3000); // 5 seconds
       }
     });
   </script>
