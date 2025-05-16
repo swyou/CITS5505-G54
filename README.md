@@ -27,6 +27,7 @@ Upload your meal data effortlessly through our user-friendly interface. Visualiz
 git clone git@github.com:swyou/CITS5505-G54.git
 cd CITS5505-G54
 ```
+- _If you are not cloing from GitHub, directory name may vary. Make sure you're in the project directory._
 
 #### 2. Set up python environment
 ```
@@ -37,7 +38,6 @@ python -m venv venv
 For **Windows**:
 ```
 venv\Scripts\activate
-
 ```
 
 For Linux/MacOS
@@ -48,7 +48,6 @@ source venv/bin/activate
 #### 4. Install requirements
 ```
 pip install -r requirements.txt
-
 ```
 
 #### 5. Run App
@@ -64,15 +63,11 @@ python run.py
 python -m unittest tests.unit_tests
 ```
 
-
-
 - Run selenium tests
 
 ```bash
 python -m unittest tests.selenium
 ```
-
-
 
 
 ### Git related
@@ -93,3 +88,13 @@ git commit -m "Some descriptive commit message here"
 git push origin feature/some-new-feature
 ```
    - Then open a Pull Request describing the changes and referencing any relevant issues.
+
+
+## Declaration of use of AI
+This project is partially developed with the help of GitHub Copilot. All AI-generated suggestions were reviewed, adjusted and modified as necessary to ensure high-quality code, and keep them under our control and within our understanding.
+The use of AI is involved in below parts:
+- Suggestions on tackling `wtforms` issues in biz page and complying with security needs
+- Suggestions on separating footer, header and sidebar for re-use
+- Suggestions on issues when setting up `selenium` tests
+- Suggestions on css adjustment, including flash message box, consistency of colour and style.
+- Code review for PR #23 
