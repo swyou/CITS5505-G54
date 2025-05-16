@@ -217,3 +217,49 @@
     opacity: 0;
   }
   
+
+  /* ====== Responsive for cellphones ====== */
+  @media all and (max-width: 1140px) {
+    .header {
+      padding: 0 20px;
+      background-color: #fff;
+    }
+  
+    .main-container {
+      width: auto;
+    }
+  
+    .side-bar-l ul {
+      display: flex;
+      padding-left: 20px;
+      padding-top: 0;
+    }
+  
+    .side-bar-l ul li {
+      margin-right: 20px;
+    }
+  
+    .main-content .main-container {
+      width: 100%;
+      position: relative;
+    }
+  
+    .main-content .main-container > div {
+      float: none !important;
+    }
+  
+    .main-content .main-container .main-inner {
+      margin: auto;
+      width: 95%;
+    }
+  
+    .main-right {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+    }
+  
+    .main-right .popular {
+      display: none;
+    }
+  }

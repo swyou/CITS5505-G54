@@ -1,3 +1,7 @@
+# This script is a development tool designed to allow developers to manually delete a user
+# from the SQLite database used in the SmartBite Flask application.
+# It is useful during testing or debugging when you need to remove test users from the system.
+
 from app import create_app, db
 from app.models import User
 

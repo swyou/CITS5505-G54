@@ -2,18 +2,29 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, DateField, FieldList, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo, Optional
 
-
+# --------------------------
+# Login Form
+# --------------------------
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
+
+
+# --------------------------
+# Registration Form
+# --------------------------
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+
+# --------------------------
+# Recipe Upload Form
+# --------------------------
 class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     servings = IntegerField('Servings', validators=[Optional()])
@@ -25,6 +36,10 @@ class RecipeForm(FlaskForm):
     steps = StringField('Preparation Steps', validators=[Optional()])
 
     def validate(self, extra_validators=None):
+        """
+        Custom validation to ensure that for each ingredient,
+        either predefined grams or a custom gram value is provided.
+        """
         rv = super().validate(extra_validators=extra_validators)
         if not rv:
             return False
@@ -38,6 +53,12 @@ class RecipeForm(FlaskForm):
                 return False
         return True
 
+
+
+# --------------------------
+# Share Data Form
+# --------------------------
 class ShareDataForm(FlaskForm):
     user = SelectField('Select a user', validators=[DataRequired()], coerce=int)
-    submit = SubmitField('Share Data')
+    # Dropdown list of available users to share data with (user IDs as values)
+    submit = SubmitField('Share Data') # Submit button
